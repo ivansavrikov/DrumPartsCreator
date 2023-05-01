@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RealTimeRhythm"
+    android:background="#171717">
+
+    <Button
+        android:id="@+id/btnKick"
+        android:text="kick"
+        android:onClick="onClick"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:backgroundTint="@null"
+        style="@style/button"
+        android:backgroundTintMode="multiply"
+        android:backgroundTint="#88FAB2"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="50dp"/>
+
+    <Button
+        android:id="@+id/btnHihat"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:onClick="onClick"
+        app:backgroundTint="@null"
+        style="@style/button"
+        android:text="hihat"
+        app:layout_constraintBottom_toBottomOf="@+id/btnKick"
+        app:layout_constraintStart_toEndOf="@+id/btnKick"
+        android:backgroundTintMode="multiply"
+        android:backgroundTint="#96FFF2"
+        android:layout_marginLeft="5dp"/>
+
+    <Button
+        android:id="@+id/btnSnare"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:onClick="onClick"
+        android:text="snare"
+        android:backgroundTintMode="multiply"
+        android:backgroundTint="#C182FF"
+        app:backgroundTint="@null"
+        style="@style/button"
+        app:layout_constraintBottom_toBottomOf="@+id/btnKick"
+        app:layout_constraintStart_toEndOf="@+id/btnHihat"
+        android:layout_marginLeft="5dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

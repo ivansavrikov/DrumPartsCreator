@@ -1,0 +1,5 @@
+<resources>
+    <style name="Theme.CourseProject" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:buttonStyle">@style/button</item>
+    </style>
+</resources>
