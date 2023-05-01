@@ -4,49 +4,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RealTimeRhythm"
-    android:background="#171717">
+    android:background="#171717"
+    tools:context=".RealTimeRhythm">
+
+    <ToggleButton
+        android:id="@+id/btnMetronome"
+        style="@style/button"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="#FF62B3"
+        android:backgroundTintMode="multiply"
+        android:gravity="center_horizontal"
+        android:paddingStart="0dp"
+        android:text="Metronome\n80"
+        app:backgroundTint="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:checked="false" />
 
     <Button
         android:id="@+id/btnKick"
-        android:text="kick"
-        android:onClick="onClick"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:backgroundTint="@null"
         style="@style/button"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginRight="1dp"
+        android:backgroundTint="#7BFFC6"
         android:backgroundTintMode="multiply"
-        android:backgroundTint="#88FAB2"
-        android:layout_marginTop="200dp"
-        android:layout_marginLeft="50dp"/>
+        android:onClick="onClick"
+        android:text="kick"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/btnHihat"
+        app:layout_constraintEnd_toStartOf="@+id/btnHihat" />
 
     <Button
         android:id="@+id/btnHihat"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:onClick="onClick"
-        app:backgroundTint="@null"
         style="@style/button"
-        android:text="hihat"
-        app:layout_constraintBottom_toBottomOf="@+id/btnKick"
-        app:layout_constraintStart_toEndOf="@+id/btnKick"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:backgroundTint="#75FFEE"
         android:backgroundTintMode="multiply"
-        android:backgroundTint="#96FFF2"
-        android:layout_marginLeft="5dp"/>
+        android:onClick="onClick"
+        android:text="hihat"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnSnare"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        style="@style/button"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginLeft="1dp"
+        android:backgroundTint="#8980FF"
+        android:backgroundTintMode="multiply"
         android:onClick="onClick"
         android:text="snare"
-        android:backgroundTintMode="multiply"
-        android:backgroundTint="#C182FF"
         app:backgroundTint="@null"
-        style="@style/button"
-        app:layout_constraintBottom_toBottomOf="@+id/btnKick"
-        app:layout_constraintStart_toEndOf="@+id/btnHihat"
-        android:layout_marginLeft="5dp"/>
+        app:layout_constraintBottom_toBottomOf="@+id/btnHihat"
+        app:layout_constraintStart_toEndOf="@+id/btnHihat" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
