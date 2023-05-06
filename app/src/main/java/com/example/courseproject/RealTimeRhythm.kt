@@ -1,28 +1,31 @@
 package com.example.courseproject
 
+import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.widget.Button
-import android.widget.CompoundButton
 import android.widget.CompoundButton.OnCheckedChangeListener
 import android.widget.ToggleButton
+import java.util.*
+import kotlin.concurrent.timerTask
 
-class RealTimeRhythm : AppCompatActivity(), OnCheckedChangeListener {
-
-    private var bpm: Int = 80
-    private var spanBetweenBeats: Int = 60000 / bpm
-
-    private lateinit var metronome: ToggleButton
-    private lateinit var mainHandler: Handler
-
+class RealTimeRhythm : AppCompatActivity() {
     private lateinit var metronomePlayer: MediaPlayer
     private lateinit var kickPlayer: MediaPlayer
     private lateinit var hihatPlayer: MediaPlayer
     private lateinit var snarePlayer: MediaPlayer
+
+    private lateinit var openhatPlayer: MediaPlayer
+    private lateinit var scratchPlayer: MediaPlayer
+    private lateinit var clapPlayer: MediaPlayer
+    private lateinit var cowbell1Player: MediaPlayer
+    private lateinit var cowbell2Player: MediaPlayer
+    private lateinit var cowbell3Player: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,55 +36,124 @@ class RealTimeRhythm : AppCompatActivity(), OnCheckedChangeListener {
         hihatPlayer = MediaPlayer.create(this, R.raw.hihat_1)
         snarePlayer = MediaPlayer.create(this, R.raw.snare_1)
 
-        metronome = findViewById(R.id.btnMetronome)
-        metronome.setOnCheckedChangeListener(this)
+        openhatPlayer = MediaPlayer.create(this, R.raw.openhat)
+        scratchPlayer = MediaPlayer.create(this, R.raw.scratch)
+        clapPlayer = MediaPlayer.create(this, R.raw.clap)
+        cowbell1Player = MediaPlayer.create(this, R.raw.cowbell_long)
+        cowbell2Player = MediaPlayer.create(this, R.raw.cowbell_long)
+        cowbell3Player = MediaPlayer.create(this, R.raw.cowbell_long)
 
-        mainHandler = Handler(Looper.getMainLooper())
+        val btnMetronome: ToggleButton = findViewById(R.id.btnMetronome)
+        btnMetronome.setOnCheckedChangeListener(myCheckedChangeListener)
+
+        val btnKick: Button = findViewById(R.id.btnKick)
+        val btnHihat: Button = findViewById(R.id.btnHihat)
+        val btnSnare: Button = findViewById(R.id.btnSnare)
+
+        val btnOpenhat :Button = findViewById(R.id.button)
+        val btnScratch :Button = findViewById(R.id.button3)
+        val btnClap :Button = findViewById(R.id.button5)
+        val btnCowbell1 :Button = findViewById(R.id.button4)
+        val btnCowbell2 :Button = findViewById(R.id.btn8)
+        val btnCowbell3 :Button = findViewById(R.id.button2)
+
+        val btnEdit: Button = findViewById(R.id.btnEdit)
+        btnEdit.setOnTouchListener(drumTouchListener)
+
+        btnKick.setOnTouchListener(drumTouchListener)
+        btnHihat.setOnTouchListener(drumTouchListener)
+        btnSnare.setOnTouchListener(drumTouchListener)
+
+        btnOpenhat.setOnTouchListener(drumTouchListener)
+        btnScratch.setOnTouchListener(drumTouchListener)
+        btnClap.setOnTouchListener(drumTouchListener)
+        btnCowbell1.setOnTouchListener(drumTouchListener)
+        btnCowbell2.setOnTouchListener(drumTouchListener)
+        btnCowbell3.setOnTouchListener(drumTouchListener)
+
+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
     }
 
-    fun onClick(view: View) {
-        when (view.id) {
-            R.id.btnKick -> {
-                kickPlayer.start()
-            }
+    private val drumTouchListener = object : View.OnTouchListener {
+        override fun onTouch(view: View?, event: MotionEvent?): Boolean {
+            when (event?.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    when (view?.id) {
+                        R.id.btnKick -> {
+                            kickPlayer.start()
+                        }
 
-            R.id.btnHihat -> {
-                hihatPlayer.start()
-            }
+                        R.id.btnHihat -> {
+                            hihatPlayer.start()
+                        }
 
-            R.id.btnSnare -> {
-                snarePlayer.start()
+                        R.id.btnSnare -> {
+                            snarePlayer.start()
+                        }
+
+                        R.id.button -> {
+                            openhatPlayer.start()
+                        }
+
+                        R.id.button3 -> {
+                            scratchPlayer.start()
+                        }
+
+                        R.id.button5 -> {
+                            clapPlayer.start()
+                        }
+
+                        R.id.button4 -> {
+                            cowbell1Player.start()
+                        }
+
+                        R.id.btn8 -> {
+                            cowbell2Player.start()
+                        }
+
+                        R.id.button2 -> {
+                            cowbell3Player.start()
+                        }
+
+                        R.id.btnEdit -> {
+                            intent = Intent(this@RealTimeRhythm, RhythmicGridActivity::class.java)
+                            startActivity(intent)
+                        }
+                    }
+                    return true
+                }
+                MotionEvent.ACTION_UP -> {
+                    return true
+                }
+                else -> return false
             }
         }
     }
 
-    override fun onCheckedChanged(metronome: CompoundButton?, isChecked: Boolean) {
-        if (isChecked) onResume()
-        else onPause()
-    }
+    private val myCheckedChangeListener =
+        OnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                metronomeStart()
+            } else{
+                metronomeStop()
+            }
+        }
 
-    private val activateMetronome = object : Runnable {
-        var beats: Int = 0
-        override fun run() {
-            beats++
+    private var timer: Timer? = null
+    private var tickCount: Int = 0
 
-            if (beats == 1 || beats % 4 == 0)
-                metronomePlayer.setVolume(1.0f, 1.0f)
-            else
-                metronomePlayer.setVolume(0.7f, 0.7f)
-
+    private fun metronomeStart() {
+        timer = Timer()
+        timer?.scheduleAtFixedRate(timerTask {
+            tickCount++
             metronomePlayer.start()
-            mainHandler.postDelayed(this, spanBetweenBeats.toLong())
-        }
+        }, 0, (60_000 / 120).toLong())
     }
 
-    override fun onPause() {
-        super.onPause()
-        mainHandler.removeCallbacks(activateMetronome)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mainHandler.post(activateMetronome)
+    private fun metronomeStop() {
+        timer?.cancel()
+        timer = null
+        tickCount = 0
     }
 }
