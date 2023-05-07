@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="transparent">#00FFFFFF</color>
-    <color name="black">#FF000000</color>
+    <color name="black">#000000</color>
     <color name="white">#FFFFFFFF</color>
-
-    <color name="Thermal_0">#000000</color>
-    <color name="Thermal_1">#7e2318</color>
-    <color name="Thermal_2">#bd3924</color>
-    <color name="Thermal_3">#dd4b2a</color>
-    <color name="Thermal_4">#ee5a2d</color>
-    <color name="Thermal_5">#f66631</color>
-    <color name="Thermal_6">#fa7333</color>
-    <color name="Thermal_7">#fc7f34</color>
-
-    <color name="Thermal_background">#030303</color>
 </resources>

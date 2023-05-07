@@ -1,7 +1,6 @@
 package com.example.courseproject
 
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -73,72 +72,69 @@ class RealTimeRhythm : AppCompatActivity() {
 
     private val drumTouchListener = object : View.OnTouchListener {
         override fun onTouch(view: View?, event: MotionEvent?): Boolean {
-            when (event?.action) {
-                MotionEvent.ACTION_DOWN -> {
+            when(event?.actionMasked){
+                MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN ->{
                     when (view?.id) {
                         R.id.btnKick -> {
-                            if(kickPlayer.isPlaying){
-                                kickPlayer.pause()
-                                kickPlayer.stop()
-                                kickPlayer.prepare()
-                       }
-                            kickPlayer.start()
+                            playDrum(kickPlayer)
                         }
 
                         R.id.btnHihat -> {
-                            hihatPlayer.start()
+                            playDrum(hihatPlayer)
                         }
 
                         R.id.btnSnare -> {
-                            snarePlayer.start()
+                            playDrum(snarePlayer)
                         }
 
                         R.id.btnOpenHat -> {
-                            openhatPlayer.start()
+                            playDrum(openhatPlayer) //issue
                         }
 
                         R.id.btnScratch -> {
-                            scratchPlayer.start()
+                            playDrum(scratchPlayer)
                         }
 
                         R.id.btnClap -> {
-                            clapPlayer.start()
+                            playDrum(clapPlayer)
                         }
 
                         R.id.btnCowbell1 -> {
-                            cowbell1Player.start()
+                            playDrum(cowbell1Player)
                         }
 
                         R.id.btnCowbell2 -> {
-                            cowbell2Player.start()
+                            playDrum(cowbell2Player)
                         }
 
                         R.id.btnCowbell3 -> {
-                            cowbell3Player.start()
+                            playDrum(cowbell3Player)
                         }
 
                         R.id.btnEdit -> {
                             intent = Intent(this@RealTimeRhythm, RhythmicGridActivity::class.java)
                             startActivity(intent)
-                        }
+                        } //issue
                     }
-                    return true
                 }
-                MotionEvent.ACTION_UP -> {
-                    return true
-                }
-                else -> return false
             }
+            view?.performClick()
+            return false
         }
+    }
+
+    private fun playDrum(mediaPlayer: MediaPlayer){
+        if(mediaPlayer.isPlaying){
+            mediaPlayer.pause()
+            mediaPlayer.seekTo(0)
+        }
+        mediaPlayer.start()
     }
 
     private val myCheckedChangeListener =
         OnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                metronomeStart()
-            } else{
-                metronomeStop()
-            }
+            if (isChecked) metronomeStart()
+            else metronomeStop()
         }
 
     private var timer: Timer? = null
