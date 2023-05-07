@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnTouchListener
 import android.widget.Button
 import android.widget.CompoundButton.OnCheckedChangeListener
 import android.widget.ToggleButton
@@ -50,12 +49,12 @@ class RealTimeRhythm : AppCompatActivity() {
         val btnHihat: Button = findViewById(R.id.btnHihat)
         val btnSnare: Button = findViewById(R.id.btnSnare)
 
-        val btnOpenhat :Button = findViewById(R.id.button)
-        val btnScratch :Button = findViewById(R.id.button3)
-        val btnClap :Button = findViewById(R.id.button5)
-        val btnCowbell1 :Button = findViewById(R.id.button4)
-        val btnCowbell2 :Button = findViewById(R.id.btn8)
-        val btnCowbell3 :Button = findViewById(R.id.button2)
+        val btnOpenhat :Button = findViewById(R.id.btnOpenHat)
+        val btnScratch :Button = findViewById(R.id.btnScratch)
+        val btnClap :Button = findViewById(R.id.btnClap)
+        val btnCowbell1 :Button = findViewById(R.id.btnCowbell1)
+        val btnCowbell2 :Button = findViewById(R.id.btnCowbell2)
+        val btnCowbell3 :Button = findViewById(R.id.btnCowbell3)
 
         val btnEdit: Button = findViewById(R.id.btnEdit)
         btnEdit.setOnTouchListener(drumTouchListener)
@@ -70,9 +69,6 @@ class RealTimeRhythm : AppCompatActivity() {
         btnCowbell1.setOnTouchListener(drumTouchListener)
         btnCowbell2.setOnTouchListener(drumTouchListener)
         btnCowbell3.setOnTouchListener(drumTouchListener)
-
-
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
     }
 
     private val drumTouchListener = object : View.OnTouchListener {
@@ -81,6 +77,11 @@ class RealTimeRhythm : AppCompatActivity() {
                 MotionEvent.ACTION_DOWN -> {
                     when (view?.id) {
                         R.id.btnKick -> {
+                            if(kickPlayer.isPlaying){
+                                kickPlayer.pause()
+                                kickPlayer.stop()
+                                kickPlayer.prepare()
+                       }
                             kickPlayer.start()
                         }
 
@@ -92,27 +93,27 @@ class RealTimeRhythm : AppCompatActivity() {
                             snarePlayer.start()
                         }
 
-                        R.id.button -> {
+                        R.id.btnOpenHat -> {
                             openhatPlayer.start()
                         }
 
-                        R.id.button3 -> {
+                        R.id.btnScratch -> {
                             scratchPlayer.start()
                         }
 
-                        R.id.button5 -> {
+                        R.id.btnClap -> {
                             clapPlayer.start()
                         }
 
-                        R.id.button4 -> {
+                        R.id.btnCowbell1 -> {
                             cowbell1Player.start()
                         }
 
-                        R.id.btn8 -> {
+                        R.id.btnCowbell2 -> {
                             cowbell2Player.start()
                         }
 
-                        R.id.button2 -> {
+                        R.id.btnCowbell3 -> {
                             cowbell3Player.start()
                         }
 
