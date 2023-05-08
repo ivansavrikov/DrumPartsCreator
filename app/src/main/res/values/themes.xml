@@ -2,6 +2,7 @@
     <style name="Theme.CourseProject" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:buttonStyle">@style/button</item>
         <item name="android:statusBarColor">@color/black</item>
+        <item name="android:navigationBarColor">@color/black</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">

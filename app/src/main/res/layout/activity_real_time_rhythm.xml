@@ -7,18 +7,6 @@
     android:background="@color/black"
     tools:context=".RealTimeRhythm">
 
-    <Button
-        android:id="@+id/btnEdit"
-        style="@style/button"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="1dp"
-        android:gravity="center"
-        android:text="Edit"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/btnMetronome"
-        app:layout_constraintStart_toEndOf="@+id/btnMetronome" />
-
     <ToggleButton
         android:id="@+id/btnMetronome"
         style="@style/button"
@@ -33,6 +21,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnEdit"
+        style="@style/button"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="1dp"
+        android:gravity="center"
+        android:text="Edit"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/btnMetronome"
+        app:layout_constraintStart_toEndOf="@+id/btnMetronome" />
 
     <Button
         android:id="@+id/btnKick"

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnClickListener
 import android.widget.Button
 import android.widget.CompoundButton.OnCheckedChangeListener
 import android.widget.ToggleButton
@@ -17,7 +18,6 @@ class RealTimeRhythm : AppCompatActivity() {
     private lateinit var kickPlayer: MediaPlayer
     private lateinit var hihatPlayer: MediaPlayer
     private lateinit var snarePlayer: MediaPlayer
-
     private lateinit var openhatPlayer: MediaPlayer
     private lateinit var scratchPlayer: MediaPlayer
     private lateinit var clapPlayer: MediaPlayer
@@ -33,7 +33,6 @@ class RealTimeRhythm : AppCompatActivity() {
         kickPlayer = MediaPlayer.create(this, R.raw.kick_1)
         hihatPlayer = MediaPlayer.create(this, R.raw.hihat_1)
         snarePlayer = MediaPlayer.create(this, R.raw.snare_1)
-
         openhatPlayer = MediaPlayer.create(this, R.raw.openhat)
         scratchPlayer = MediaPlayer.create(this, R.raw.scratch)
         clapPlayer = MediaPlayer.create(this, R.raw.clap)
@@ -47,7 +46,6 @@ class RealTimeRhythm : AppCompatActivity() {
         val btnKick: Button = findViewById(R.id.btnKick)
         val btnHihat: Button = findViewById(R.id.btnHihat)
         val btnSnare: Button = findViewById(R.id.btnSnare)
-
         val btnOpenhat :Button = findViewById(R.id.btnOpenHat)
         val btnScratch :Button = findViewById(R.id.btnScratch)
         val btnClap :Button = findViewById(R.id.btnClap)
@@ -56,12 +54,11 @@ class RealTimeRhythm : AppCompatActivity() {
         val btnCowbell3 :Button = findViewById(R.id.btnCowbell3)
 
         val btnEdit: Button = findViewById(R.id.btnEdit)
-        btnEdit.setOnTouchListener(drumTouchListener)
+        btnEdit.setOnClickListener(menuManager)
 
         btnKick.setOnTouchListener(drumTouchListener)
         btnHihat.setOnTouchListener(drumTouchListener)
         btnSnare.setOnTouchListener(drumTouchListener)
-
         btnOpenhat.setOnTouchListener(drumTouchListener)
         btnScratch.setOnTouchListener(drumTouchListener)
         btnClap.setOnTouchListener(drumTouchListener)
@@ -110,16 +107,20 @@ class RealTimeRhythm : AppCompatActivity() {
                         R.id.btnCowbell3 -> {
                             playDrum(cowbell3Player)
                         }
-
-                        R.id.btnEdit -> {
-                            intent = Intent(this@RealTimeRhythm, RhythmicGridActivity::class.java)
-                            startActivity(intent)
-                        } //issue
                     }
                 }
             }
             view?.performClick()
             return false
+        }
+    }
+
+    private val menuManager = OnClickListener { view ->
+        when(view.id){
+            R.id.btnEdit -> {
+                intent = Intent(this@RealTimeRhythm, RhythmicGridActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 
