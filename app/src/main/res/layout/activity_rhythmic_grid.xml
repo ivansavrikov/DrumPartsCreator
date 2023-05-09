@@ -7,15 +7,13 @@
     tools:context=".RhythmicGridActivity"
     android:background="@color/black">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Запомни, друг, такую фразу все будет но не сразу"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:fontFamily="monospace"/>
+        app:layout_constraintStart_toStartOf="parent">
+
+    </GridLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
