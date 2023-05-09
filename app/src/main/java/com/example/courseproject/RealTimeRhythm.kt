@@ -7,10 +7,8 @@ import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnClickListener
-import android.widget.Button
+import android.widget.*
 import android.widget.CompoundButton.OnCheckedChangeListener
-import android.widget.EditText
-import android.widget.ToggleButton
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -19,6 +17,8 @@ class RealTimeRhythm : AppCompatActivity() {
     private lateinit var editTextBpm: EditText
 
     private lateinit var metronomePlayer: MediaPlayer
+    private lateinit var metronomeBeepDPlayer: MediaPlayer
+    private lateinit var metronomeBeepCPlayer: MediaPlayer
     private lateinit var kickPlayer: MediaPlayer
     private lateinit var hihatPlayer: MediaPlayer
     private lateinit var snarePlayer: MediaPlayer
@@ -36,6 +36,9 @@ class RealTimeRhythm : AppCompatActivity() {
         editTextBpm = findViewById(R.id.editTextBpm)
 
         metronomePlayer = MediaPlayer.create(this, R.raw.metronome)
+        metronomeBeepDPlayer = MediaPlayer.create(this, R.raw.metronome_beep_d)
+        metronomeBeepCPlayer = MediaPlayer.create(this, R.raw.metronome_beep_c)
+
         kickPlayer = MediaPlayer.create(this, R.raw.kick_1)
         hihatPlayer = MediaPlayer.create(this, R.raw.hihat_1)
         snarePlayer = MediaPlayer.create(this, R.raw.snare_1)
@@ -152,8 +155,9 @@ class RealTimeRhythm : AppCompatActivity() {
         val bpm: Int =  editTextBpm.text.toString().toInt()
         val beatTime = (60_000 / bpm).toLong()
         timer?.scheduleAtFixedRate(timerTask {
+            if(tickCount % 4 == 0) metronomeBeepDPlayer.start()
+            else metronomeBeepCPlayer.start()
             tickCount++
-            metronomePlayer.start()
         }, 0, beatTime)
     }
 
