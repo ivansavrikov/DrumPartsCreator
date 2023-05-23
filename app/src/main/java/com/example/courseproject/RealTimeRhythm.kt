@@ -2,52 +2,38 @@ package com.example.courseproject
 
 import android.content.Intent
 import android.media.MediaPlayer
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.*
 import android.widget.CompoundButton.OnCheckedChangeListener
+import androidx.appcompat.app.AppCompatActivity
+import com.example.courseproject.core.ManeValues
 import java.util.*
 import kotlin.concurrent.timerTask
 
 class RealTimeRhythm : AppCompatActivity() {
-
     private lateinit var editTextBpm: EditText
-
-    private lateinit var metronomePlayer: MediaPlayer
-    private lateinit var metronomeBeepDPlayer: MediaPlayer
-    private lateinit var metronomeBeepCPlayer: MediaPlayer
-    private lateinit var kickPlayer: MediaPlayer
-    private lateinit var hihatPlayer: MediaPlayer
-    private lateinit var snarePlayer: MediaPlayer
-    private lateinit var openhatPlayer: MediaPlayer
-    private lateinit var scratchPlayer: MediaPlayer
-    private lateinit var clapPlayer: MediaPlayer
-    private lateinit var cowbell1Player: MediaPlayer
-    private lateinit var cowbell2Player: MediaPlayer
-    private lateinit var cowbell3Player: MediaPlayer
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_real_time_rhythm)
 
         editTextBpm = findViewById(R.id.editTextBpm)
 
-        metronomePlayer = MediaPlayer.create(this, R.raw.metronome)
-        metronomeBeepDPlayer = MediaPlayer.create(this, R.raw.metronome_beep_d)
-        metronomeBeepCPlayer = MediaPlayer.create(this, R.raw.metronome_beep_c)
+        ManeValues.metronomePlayer = MediaPlayer.create(this, R.raw.metronome)
+        ManeValues.metronomeBeepDPlayer = MediaPlayer.create(this, R.raw.metronome_beep_d)
+        ManeValues.metronomeBeepCPlayer = MediaPlayer.create(this, R.raw.metronome_beep_c)
 
-        kickPlayer = MediaPlayer.create(this, R.raw.kick_1)
-        hihatPlayer = MediaPlayer.create(this, R.raw.hihat_1)
-        snarePlayer = MediaPlayer.create(this, R.raw.snare_1)
-        openhatPlayer = MediaPlayer.create(this, R.raw.openhat)
-        scratchPlayer = MediaPlayer.create(this, R.raw.scratch)
-        clapPlayer = MediaPlayer.create(this, R.raw.clap)
-        cowbell1Player = MediaPlayer.create(this, R.raw.cowbell_long)
-        cowbell2Player = MediaPlayer.create(this, R.raw.cowbell_long)
-        cowbell3Player = MediaPlayer.create(this, R.raw.cowbell_long)
+        ManeValues.kickPlayer = MediaPlayer.create(this, R.raw.kick_1)
+        ManeValues.hihatPlayer = MediaPlayer.create(this, R.raw.hihat_1)
+        ManeValues.snarePlayer = MediaPlayer.create(this, R.raw.snare_1)
+        ManeValues.openhatPlayer = MediaPlayer.create(this, R.raw.openhat)
+        ManeValues.scratchPlayer = MediaPlayer.create(this, R.raw.scratch)
+        ManeValues.clapPlayer = MediaPlayer.create(this, R.raw.clap)
+        ManeValues.cowbell1Player = MediaPlayer.create(this, R.raw.cowbell_long)
+        ManeValues.cowbell2Player = MediaPlayer.create(this, R.raw.cowbell_long)
+        ManeValues.cowbell3Player = MediaPlayer.create(this, R.raw.cowbell_long)
 
         val btnMetronome: ToggleButton = findViewById(R.id.btnMetronome)
         btnMetronome.setOnCheckedChangeListener(myCheckedChangeListener)
@@ -82,39 +68,39 @@ class RealTimeRhythm : AppCompatActivity() {
                 MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN ->{
                     when (view?.id) {
                         R.id.btnKick -> {
-                            playDrum(kickPlayer)
+                            playDrum(ManeValues.kickPlayer)
                         }
 
                         R.id.btnHihat -> {
-                            playDrum(hihatPlayer)
+                            playDrum(ManeValues.hihatPlayer)
                         }
 
                         R.id.btnSnare -> {
-                            playDrum(snarePlayer)
+                            playDrum(ManeValues.snarePlayer)
                         }
 
                         R.id.btnOpenHat -> {
-                            playDrum(openhatPlayer) //issue
+                            playDrum(ManeValues.openhatPlayer) //issue
                         }
 
                         R.id.btnScratch -> {
-                            playDrum(scratchPlayer)
+                            playDrum(ManeValues.scratchPlayer)
                         }
 
                         R.id.btnClap -> {
-                            playDrum(clapPlayer)
+                            playDrum(ManeValues.clapPlayer)
                         }
 
                         R.id.btnCowbell1 -> {
-                            playDrum(cowbell1Player)
+                            playDrum(ManeValues.cowbell1Player)
                         }
 
                         R.id.btnCowbell2 -> {
-                            playDrum(cowbell2Player)
+                            playDrum(ManeValues.cowbell2Player)
                         }
 
                         R.id.btnCowbell3 -> {
-                            playDrum(cowbell3Player)
+                            playDrum(ManeValues.cowbell3Player)
                         }
                     }
                 }
@@ -152,11 +138,11 @@ class RealTimeRhythm : AppCompatActivity() {
 
     private fun metronomeStart() {
         timer = Timer()
-        val bpm: Int =  editTextBpm.text.toString().toInt()
-        val beatTime = (60_000 / bpm).toLong()
+        ManeValues.bpm =  editTextBpm.text.toString().toInt()
+        val beatTime = (60_000 / ManeValues.bpm).toLong()
         timer?.scheduleAtFixedRate(timerTask {
-            if(tickCount % 4 == 0) metronomeBeepDPlayer.start()
-            else metronomeBeepCPlayer.start()
+            if(tickCount % 4 == 0) ManeValues.metronomeBeepDPlayer.start()
+            else ManeValues.metronomeBeepCPlayer.start()
             tickCount++
         }, 0, beatTime)
     }
