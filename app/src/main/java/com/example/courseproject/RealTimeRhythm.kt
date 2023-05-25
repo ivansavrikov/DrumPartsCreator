@@ -2,7 +2,10 @@ package com.example.courseproject
 
 import android.content.Intent
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnClickListener
@@ -20,46 +23,73 @@ class RealTimeRhythm : AppCompatActivity() {
         setContentView(R.layout.activity_real_time_rhythm)
 
         editTextBpm = findViewById(R.id.editTextBpm)
+        editTextBpm.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                return
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                return
+            }
+
+            override fun afterTextChanged(editText: Editable) {
+                if(editTextBpm.text.toString() != ""){ //hack
+                    ManeValues.bpm = editTextBpm.text.toString().toInt()
+                    ManeValues.beatDuration = 60_000/ManeValues.bpm.toLong()
+                    ManeValues.stepDuration = ManeValues.beatDuration/2
+                }
+            }
+        })
 
         ManeValues.metronomePlayer = MediaPlayer.create(this, R.raw.metronome)
         ManeValues.metronomeBeepDPlayer = MediaPlayer.create(this, R.raw.metronome_beep_d)
         ManeValues.metronomeBeepCPlayer = MediaPlayer.create(this, R.raw.metronome_beep_c)
 
-        ManeValues.kickPlayer = MediaPlayer.create(this, R.raw.kick_1)
-        ManeValues.hihatPlayer = MediaPlayer.create(this, R.raw.hihat_1)
-        ManeValues.snarePlayer = MediaPlayer.create(this, R.raw.snare_1)
-        ManeValues.openhatPlayer = MediaPlayer.create(this, R.raw.openhat)
-        ManeValues.scratchPlayer = MediaPlayer.create(this, R.raw.scratch)
-        ManeValues.clapPlayer = MediaPlayer.create(this, R.raw.clap)
-        ManeValues.cowbell1Player = MediaPlayer.create(this, R.raw.cowbell_long)
-        ManeValues.cowbell2Player = MediaPlayer.create(this, R.raw.cowbell_long)
-        ManeValues.cowbell3Player = MediaPlayer.create(this, R.raw.cowbell_long)
+        val pad1Sound: Uri = Uri.parse("android.resource://com.example.courseproject/raw/kick_1")
+        val pad2Sound: Uri = Uri.parse("android.resource://com.example.courseproject/raw/hihat_1")
+        val pad3Sound: Uri = Uri.parse("android.resource://com.example.courseproject/raw/snare_1")
+        val pad4Sound: Uri = Uri.parse("android.resource://com.example.courseproject/raw/openhat")
+        val pad5Sound: Uri = Uri.parse("android.resource://com.example.courseproject/raw/scratch")
+        val pad6Sound: Uri = Uri.parse("android.resource://com.example.courseproject/raw/clap")
+        val pad7Sound: Uri = Uri.parse("android.resource://com.example.courseproject/raw/cowbell_long")
+        val pad8Sound: Uri = Uri.parse("android.resource://com.example.courseproject/raw/cowbell_long")
+        val pad9Sound: Uri = Uri.parse("android.resource://com.example.courseproject/raw/cowbell_long")
+
+        ManeValues.pad1Player = MediaPlayer.create(this, pad1Sound)
+        ManeValues.pad2Player = MediaPlayer.create(this, pad2Sound)
+        ManeValues.pad3Player = MediaPlayer.create(this, pad3Sound)
+        ManeValues.pad4Player = MediaPlayer.create(this, pad4Sound)
+        ManeValues.pad5Player = MediaPlayer.create(this, pad5Sound)
+        ManeValues.pad6Player = MediaPlayer.create(this, pad6Sound)
+        ManeValues.pad7Player = MediaPlayer.create(this, pad7Sound)
+        ManeValues.pad8Player = MediaPlayer.create(this, pad8Sound)
+        ManeValues.pad9Player = MediaPlayer.create(this, pad9Sound)
 
         val btnMetronome: ToggleButton = findViewById(R.id.btnMetronome)
         btnMetronome.setOnCheckedChangeListener(myCheckedChangeListener)
 
-        val btnKick: Button = findViewById(R.id.btnKick)
-        val btnHihat: Button = findViewById(R.id.btnHihat)
-        val btnSnare: Button = findViewById(R.id.btnSnare)
-        val btnOpenhat :Button = findViewById(R.id.btnOpenHat)
-        val btnScratch :Button = findViewById(R.id.btnScratch)
-        val btnClap :Button = findViewById(R.id.btnClap)
-        val btnCowbell1 :Button = findViewById(R.id.btnCowbell1)
-        val btnCowbell2 :Button = findViewById(R.id.btnCowbell2)
-        val btnCowbell3 :Button = findViewById(R.id.btnCowbell3)
+        val btnPad1: Button = findViewById(R.id.btnPad1)
+        val btnPad2: Button = findViewById(R.id.btnPad2)
+        val btnPad3: Button = findViewById(R.id.btnPad3)
+        val btnPad4 :Button = findViewById(R.id.btnPad4)
+        val btnPad5 :Button = findViewById(R.id.btnPad5)
+        val btnPad6 :Button = findViewById(R.id.btnPad6)
+        val btnPad7 :Button = findViewById(R.id.btnPad7)
+        val btnPad8 :Button = findViewById(R.id.btnPad8)
+        val btnPad9 :Button = findViewById(R.id.btnPad9)
 
         val btnEdit: Button = findViewById(R.id.btnEdit)
         btnEdit.setOnClickListener(menuManager)
 
-        btnKick.setOnTouchListener(drumTouchListener)
-        btnHihat.setOnTouchListener(drumTouchListener)
-        btnSnare.setOnTouchListener(drumTouchListener)
-        btnOpenhat.setOnTouchListener(drumTouchListener)
-        btnScratch.setOnTouchListener(drumTouchListener)
-        btnClap.setOnTouchListener(drumTouchListener)
-        btnCowbell1.setOnTouchListener(drumTouchListener)
-        btnCowbell2.setOnTouchListener(drumTouchListener)
-        btnCowbell3.setOnTouchListener(drumTouchListener)
+        btnPad1.setOnTouchListener(drumTouchListener)
+        btnPad2.setOnTouchListener(drumTouchListener)
+        btnPad3.setOnTouchListener(drumTouchListener)
+        btnPad4.setOnTouchListener(drumTouchListener)
+        btnPad5.setOnTouchListener(drumTouchListener)
+        btnPad6.setOnTouchListener(drumTouchListener)
+        btnPad7.setOnTouchListener(drumTouchListener)
+        btnPad8.setOnTouchListener(drumTouchListener)
+        btnPad9.setOnTouchListener(drumTouchListener)
     }
 
     private val drumTouchListener = object : View.OnTouchListener {
@@ -67,40 +97,40 @@ class RealTimeRhythm : AppCompatActivity() {
             when(event?.actionMasked){
                 MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN ->{
                     when (view?.id) {
-                        R.id.btnKick -> {
-                            playDrum(ManeValues.kickPlayer)
+                        R.id.btnPad1 -> {
+                            playDrum(ManeValues.pad1Player)
                         }
 
-                        R.id.btnHihat -> {
-                            playDrum(ManeValues.hihatPlayer)
+                        R.id.btnPad2 -> {
+                            playDrum(ManeValues.pad2Player)
                         }
 
-                        R.id.btnSnare -> {
-                            playDrum(ManeValues.snarePlayer)
+                        R.id.btnPad3 -> {
+                            playDrum(ManeValues.pad3Player)
                         }
 
-                        R.id.btnOpenHat -> {
-                            playDrum(ManeValues.openhatPlayer) //issue
+                        R.id.btnPad4 -> {
+                            playDrum(ManeValues.pad4Player) //issue
                         }
 
-                        R.id.btnScratch -> {
-                            playDrum(ManeValues.scratchPlayer)
+                        R.id.btnPad5 -> {
+                            playDrum(ManeValues.pad5Player)
                         }
 
-                        R.id.btnClap -> {
-                            playDrum(ManeValues.clapPlayer)
+                        R.id.btnPad6 -> {
+                            playDrum(ManeValues.pad6Player)
                         }
 
-                        R.id.btnCowbell1 -> {
-                            playDrum(ManeValues.cowbell1Player)
+                        R.id.btnPad7 -> {
+                            playDrum(ManeValues.pad7Player)
                         }
 
-                        R.id.btnCowbell2 -> {
-                            playDrum(ManeValues.cowbell2Player)
+                        R.id.btnPad8 -> {
+                            playDrum(ManeValues.pad8Player)
                         }
 
-                        R.id.btnCowbell3 -> {
-                            playDrum(ManeValues.cowbell3Player)
+                        R.id.btnPad9 -> {
+                            playDrum(ManeValues.pad9Player)
                         }
                     }
                 }
@@ -113,13 +143,14 @@ class RealTimeRhythm : AppCompatActivity() {
     private val menuManager = OnClickListener { view ->
         when(view.id){
             R.id.btnEdit -> {
-                intent = Intent(this@RealTimeRhythm, RhythmicGridActivity::class.java)
+                val intent = Intent(this, RhythmicGridActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
                 startActivity(intent)
             }
         }
     }
 
-    private fun playDrum(mediaPlayer: MediaPlayer){
+    private fun playDrum(mediaPlayer: MediaPlayer){ //hack
         if(mediaPlayer.isPlaying){
             mediaPlayer.pause()
             mediaPlayer.seekTo(0)
@@ -138,13 +169,11 @@ class RealTimeRhythm : AppCompatActivity() {
 
     private fun metronomeStart() {
         timer = Timer()
-        ManeValues.bpm =  editTextBpm.text.toString().toInt()
-        val beatTime = (60_000 / ManeValues.bpm).toLong()
         timer?.scheduleAtFixedRate(timerTask {
             if(tickCount % 4 == 0) ManeValues.metronomeBeepDPlayer.start()
             else ManeValues.metronomeBeepCPlayer.start()
             tickCount++
-        }, 0, beatTime)
+        }, 0, ManeValues.beatDuration)
     }
 
     private fun metronomeStop() {

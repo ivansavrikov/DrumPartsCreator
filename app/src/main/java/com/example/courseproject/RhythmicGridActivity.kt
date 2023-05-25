@@ -1,24 +1,24 @@
 package com.example.courseproject
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.CompoundButton
-import android.widget.FrameLayout
-import android.widget.GridLayout
-import android.widget.ToggleButton
+import android.widget.*
 import com.example.courseproject.core.ManeValues
 
 class RhythmicGridActivity : AppCompatActivity() {
     private lateinit var btnPlay: ToggleButton
+    private var buttonSteps: MutableList<ToggleButton> = mutableListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rhythmic_grid)
 
         btnPlay = findViewById(R.id.btnPlay)
         btnPlay.setOnCheckedChangeListener(performPlayback)
+        Toast.makeText(this, "Haha", Toast.LENGTH_SHORT).show()
 
         val gridLayout = findViewById<GridLayout>(R.id.gridLayout)
-        val rowCount = 16
+        val rowCount = 8
         val columnCount = 1
 
         gridLayout.rowCount = rowCount
@@ -29,12 +29,13 @@ class RhythmicGridActivity : AppCompatActivity() {
 
         for (row in 0 until rowCount) {
             for (col in 0 until columnCount) {
-                ManeValues.beats.add(row, false)
+                ManeValues.steps.add(row, false)
                 val cell = layoutInflater.inflate(R.layout.grid_cell, null) as FrameLayout
 
                 val toggleButton = cell.findViewById<ToggleButton>(R.id.toggleButton)
-                toggleButton.setOnCheckedChangeListener(myCheckedChangeListener)
+                toggleButton.setOnCheckedChangeListener(onClickOnStep)
                 toggleButton.id = row
+                buttonSteps.add(row, toggleButton)
 
                 val layoutParams = GridLayout.LayoutParams(columnSpec, rowSpec)
                 layoutParams.width = 0
@@ -45,27 +46,28 @@ class RhythmicGridActivity : AppCompatActivity() {
                 gridLayout.addView(cell, layoutParams)
             }
         }
+
+        ManeValues.currentPlayer = ManeValues.pad2Player
     }
 
-    private val myCheckedChangeListener =
+    private val onClickOnStep =
         CompoundButton.OnCheckedChangeListener { view, isChecked ->
-            val beat :Int = view.id
-            ManeValues.beats[beat] = isChecked
+            val step :Int = view.id
+            ManeValues.steps[step] = isChecked
 
-            if (isChecked) view.setButtonDrawable(R.drawable.button_enabled)
+            if (isChecked){
+                ManeValues.currentPlayer.start()
+                view.setButtonDrawable(R.drawable.button_enabled)
+            }
             else view.setButtonDrawable(R.drawable.cell_rhythm_grid)
         }
 
     private val performPlayback = //Функция воспроизведения паттерна
-        CompoundButton.OnCheckedChangeListener { view, isChecked ->
+        CompoundButton.OnCheckedChangeListener { _, isChecked ->
             if(isChecked){
-                for (beat in ManeValues.beats){
-                    if (beat) ManeValues.hihatPlayer.start()
-//                    else{
-//                        ManeValues.hihatPlayer.pause()
-//                        ManeValues.hihatPlayer.seekTo(0)
-//                    }
-                    Thread.sleep(ManeValues.beatDuration)
+                for (step in ManeValues.steps){ //Небольшой конфликт имен
+                    if (step) ManeValues.currentPlayer.start()
+                    Thread.sleep(ManeValues.stepDuration)
                 }
             }
         }

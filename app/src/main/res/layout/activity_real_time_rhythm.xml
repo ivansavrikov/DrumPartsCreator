@@ -49,22 +49,22 @@
         app:layout_constraintStart_toEndOf="@+id/btnMetronome" />
 
     <Button
-        android:id="@+id/btnKick"
+        android:id="@+id/btnPad1"
         style="@style/button"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginEnd="1dp"
-        android:text="kick"
+        android:text="@string/pad1_name"
         app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/btnHihat"
-        app:layout_constraintEnd_toStartOf="@+id/btnHihat" />
+        app:layout_constraintBottom_toBottomOf="@+id/btnPad2"
+        app:layout_constraintEnd_toStartOf="@+id/btnPad2" />
 
     <Button
-        android:id="@+id/btnHihat"
+        android:id="@+id/btnPad2"
         style="@style/button"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:text="hihat"
+        android:text="@string/pad2_name"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,86 +72,86 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnSnare"
+        android:id="@+id/btnPad3"
         style="@style/button"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginStart="1dp"
-        android:text="snare"
+        android:text="@string/pad3_name"
         app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/btnHihat"
-        app:layout_constraintStart_toEndOf="@+id/btnHihat" />
+        app:layout_constraintBottom_toBottomOf="@+id/btnPad2"
+        app:layout_constraintStart_toEndOf="@+id/btnPad2" />
 
     <Button
-        android:id="@+id/btnOpenHat"
+        android:id="@+id/btnPad4"
         style="@style/button"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
-        android:text="openhat"
+        android:text="@string/pad4_name"
         app:backgroundTint="@null"
-        app:layout_constraintRight_toLeftOf="@+id/btnScratch"
-        app:layout_constraintStart_toStartOf="@+id/btnKick"
-        app:layout_constraintTop_toBottomOf="@+id/btnHihat" />
+        app:layout_constraintRight_toLeftOf="@+id/btnPad5"
+        app:layout_constraintStart_toStartOf="@+id/btnPad1"
+        app:layout_constraintTop_toBottomOf="@+id/btnPad2" />
 
     <Button
-        android:id="@+id/btnScratch"
+        android:id="@+id/btnPad5"
         style="@style/button"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
-        android:text="scratch"
+        android:text="@string/pad5_name"
         app:backgroundTint="@null"
-        app:layout_constraintStart_toEndOf="@+id/btnOpenHat"
-        app:layout_constraintTop_toBottomOf="@+id/btnHihat" />
+        app:layout_constraintStart_toEndOf="@+id/btnPad4"
+        app:layout_constraintTop_toBottomOf="@+id/btnPad2" />
 
     <Button
-        android:id="@+id/btnClap"
+        android:id="@+id/btnPad6"
         style="@style/button"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
-        android:text="clap"
+        android:text="@string/pad6_name"
         app:backgroundTint="@null"
-        app:layout_constraintStart_toEndOf="@+id/btnScratch"
-        app:layout_constraintTop_toBottomOf="@+id/btnHihat" />
+        app:layout_constraintStart_toEndOf="@+id/btnPad5"
+        app:layout_constraintTop_toBottomOf="@+id/btnPad2" />
 
     <Button
-        android:id="@+id/btnCowbell1"
+        android:id="@+id/btnPad7"
         style="@style/button"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginTop="1dp"
-        android:text="cowbell"
+        android:text="@string/pad7_name"
         app:backgroundTint="@null"
-        app:layout_constraintStart_toStartOf="@+id/btnOpenHat"
-        app:layout_constraintTop_toBottomOf="@+id/btnOpenHat" />
+        app:layout_constraintStart_toStartOf="@+id/btnPad4"
+        app:layout_constraintTop_toBottomOf="@+id/btnPad4" />
 
     <Button
-        android:id="@+id/btnCowbell2"
+        android:id="@+id/btnPad8"
         style="@style/button"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginTop="1dp"
-        android:text="cowbell"
+        android:text="@string/pad8_name"
         app:backgroundTint="@null"
-        app:layout_constraintEnd_toStartOf="@+id/btnCowbell3"
-        app:layout_constraintStart_toEndOf="@+id/btnCowbell1"
-        app:layout_constraintTop_toBottomOf="@+id/btnScratch" />
+        app:layout_constraintEnd_toStartOf="@+id/btnPad9"
+        app:layout_constraintStart_toEndOf="@+id/btnPad7"
+        app:layout_constraintTop_toBottomOf="@+id/btnPad5" />
 
     <Button
-        android:id="@+id/btnCowbell3"
+        android:id="@+id/btnPad9"
         style="@style/button"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
-        android:text="cowbell"
+        android:text="@string/pad9_name"
         app:backgroundTint="@null"
-        app:layout_constraintStart_toEndOf="@+id/btnScratch"
-        app:layout_constraintTop_toBottomOf="@+id/btnClap" />
+        app:layout_constraintStart_toEndOf="@+id/btnPad5"
+        app:layout_constraintTop_toBottomOf="@+id/btnPad6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
