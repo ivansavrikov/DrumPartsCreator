@@ -15,7 +15,7 @@ class RhythmicGridActivity : AppCompatActivity() {
 
         btnPlay = findViewById(R.id.btnPlay)
         btnPlay.setOnCheckedChangeListener(performPlayback)
-        Toast.makeText(this, "Haha", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "temp", Toast.LENGTH_SHORT).show()
 
         val gridLayout = findViewById<GridLayout>(R.id.gridLayout)
         val rowCount = 8
@@ -71,4 +71,10 @@ class RhythmicGridActivity : AppCompatActivity() {
                 }
             }
         }
+
+    override fun onBackPressed(){
+        val intent = Intent(this, RealTimeRhythm::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+        startActivity(intent)
+    }
 }
