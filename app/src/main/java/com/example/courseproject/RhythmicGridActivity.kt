@@ -15,10 +15,9 @@ class RhythmicGridActivity : AppCompatActivity() {
 
         btnPlay = findViewById(R.id.btnPlay)
         btnPlay.setOnCheckedChangeListener(performPlayback)
-        Toast.makeText(this, "temp", Toast.LENGTH_SHORT).show()
 
         val gridLayout = findViewById<GridLayout>(R.id.gridLayout)
-        val rowCount = 8
+        val rowCount = 32
         val columnCount = 1
 
         gridLayout.rowCount = rowCount
@@ -31,8 +30,19 @@ class RhythmicGridActivity : AppCompatActivity() {
             for (col in 0 until columnCount) {
                 ManeValues.steps.add(row, false)
                 val cell = layoutInflater.inflate(R.layout.grid_cell, null) as FrameLayout
-
                 val toggleButton = cell.findViewById<ToggleButton>(R.id.toggleButton)
+
+                val isOddBar: Boolean = ((row/8 + 1) % 2 != 0) //можно занести в отдельную функцию
+                if(isOddBar) toggleButton.setBackgroundResource(R.drawable.step_button_off)
+                else toggleButton.setBackgroundResource(R.drawable.step_button_off_v2)
+
+                if(row % 2 == 0){
+                    val tactNumber = ((row / 2) % 4 + 1).toString()
+                    toggleButton.textOn = tactNumber
+                    toggleButton.textOff = tactNumber
+                    toggleButton.text = tactNumber //костыль мб
+                }
+
                 toggleButton.setOnCheckedChangeListener(onClickOnStep)
                 toggleButton.id = row
                 buttonSteps.add(row, toggleButton)
@@ -52,27 +62,30 @@ class RhythmicGridActivity : AppCompatActivity() {
 
     private val onClickOnStep =
         CompoundButton.OnCheckedChangeListener { view, isChecked ->
-            val step :Int = view.id
+            val step: Int = view.id
             ManeValues.steps[step] = isChecked
 
-            if (isChecked){
+            if (isChecked) {
                 ManeValues.currentPlayer.start()
-                view.setButtonDrawable(R.drawable.button_enabled)
+                view.setBackgroundResource(R.drawable.step_button_on)
+            } else {
+                val isOddBar: Boolean = ((step/8 + 1) % 2 != 0)
+                if(isOddBar) view.setBackgroundResource(R.drawable.step_button_off)
+                else view.setBackgroundResource(R.drawable.step_button_off_v2)
             }
-            else view.setButtonDrawable(R.drawable.cell_rhythm_grid)
         }
 
     private val performPlayback = //Функция воспроизведения паттерна
         CompoundButton.OnCheckedChangeListener { _, isChecked ->
-            if(isChecked){
-                for (step in ManeValues.steps){ //Небольшой конфликт имен
+            if (isChecked) {
+                for (step in ManeValues.steps) { //Небольшой конфликт имен
                     if (step) ManeValues.currentPlayer.start()
                     Thread.sleep(ManeValues.stepDuration)
                 }
             }
         }
 
-    override fun onBackPressed(){
+    override fun onBackPressed() {
         val intent = Intent(this, RealTimeRhythm::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
         startActivity(intent)

@@ -11,6 +11,13 @@
         android:layout_height="match_parent"
         android:textOn=""
         android:textOff=""
-        android:background="@drawable/cell_rhythm_grid"/>
+        android:paddingStart="10dp"
+        android:textColor="#333333"
+        android:textStyle="bold"
+        android:textSize="10sp"
+        android:checked="false"
+        android:scaleType="fitXY"
+        android:gravity="fill"
+        android:background="@drawable/step_off"/>
 
 </FrameLayout>
