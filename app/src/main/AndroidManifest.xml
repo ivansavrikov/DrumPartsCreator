@@ -14,13 +14,11 @@
         <activity
             android:name=".RhythmicGridActivity"
             android:exported="false"
-            android:launchMode="singleTop"
             android:screenOrientation="userPortrait"/>
         <activity
             android:name=".SplashScreenActivity"
             android:exported="true"
             android:theme="@style/SplashTheme"
-            android:launchMode="singleTop"
             android:screenOrientation="userPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

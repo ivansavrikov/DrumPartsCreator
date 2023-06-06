@@ -144,7 +144,7 @@ class RealTimeRhythm : AppCompatActivity() {
         when(view.id){
             R.id.btnEdit -> {
                 val intent = Intent(this, RhythmicGridActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
                 startActivity(intent)
             }
         }
