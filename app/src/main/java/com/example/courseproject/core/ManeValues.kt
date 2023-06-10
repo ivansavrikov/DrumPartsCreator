@@ -8,7 +8,19 @@ object ManeValues{
     internal var step: Double = 0.5 //Rhythmic grid step = 1/2
     internal var stepDuration :Long = 250 //step * beatDuration
 
-    internal val steps: MutableList<Boolean> = mutableListOf()
+    internal var steps: MutableList<Boolean> = mutableListOf()
+
+    internal var patterns: Array<MutableList<Boolean>> = arrayOf(
+        mutableListOf(),
+        mutableListOf(),
+        mutableListOf(),
+        mutableListOf(),
+        mutableListOf(),
+        mutableListOf(),
+        mutableListOf(),
+        mutableListOf(),
+        mutableListOf()
+    )
 
     internal lateinit var metronomePlayer: MediaPlayer
     internal lateinit var metronomeBeepDPlayer: MediaPlayer
@@ -23,4 +35,6 @@ object ManeValues{
     internal lateinit var pad8Player: MediaPlayer
     internal lateinit var pad9Player: MediaPlayer
     internal lateinit var currentPlayer: MediaPlayer
+
+    internal var players: MutableList<MediaPlayer> = mutableListOf()
 }
