@@ -1,6 +1,8 @@
 package com.example.courseproject.core
 
+import android.media.AudioAttributes
 import android.media.MediaPlayer
+import android.media.SoundPool
 
 object ManeValues{
     internal var bpm: Int = 120 // beats per minute
@@ -21,6 +23,15 @@ object ManeValues{
         mutableListOf(),
         mutableListOf()
     )
+
+    private val audioAttributes = AudioAttributes.Builder()
+        .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+        .build()
+    internal val soundPool = SoundPool.Builder()
+        .setMaxStreams(10)
+        .setAudioAttributes(audioAttributes)
+        .build()
 
     internal lateinit var metronomePlayer: MediaPlayer
     internal lateinit var metronomeBeepDPlayer: MediaPlayer

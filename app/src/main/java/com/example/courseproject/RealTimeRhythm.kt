@@ -20,6 +20,11 @@ class RealTimeRhythm : AppCompatActivity() {
     private lateinit var editTextBpm: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.decorView.systemUiVisibility = (
+                View.SYSTEM_UI_FLAG_FULLSCREEN
+                        or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+
         setContentView(R.layout.activity_real_time_rhythm)
 
         editTextBpm = findViewById(R.id.editTextBpm)
@@ -28,7 +33,7 @@ class RealTimeRhythm : AppCompatActivity() {
         ManeValues.metronomeBeepDPlayer = MediaPlayer.create(this, R.raw.metronome_beep_d) //temp maybe
         ManeValues.metronomeBeepCPlayer = MediaPlayer.create(this, R.raw.metronome_beep_c)
 
-        val pad1Sound: Uri = Uri.parse("android.resource://com.example.courseproject/raw/kick_1")
+        val pad1Sound: Uri = Uri.parse("android.resource://com.example.courseproject/raw/kick_mixed")
         val pad2Sound: Uri = Uri.parse("android.resource://com.example.courseproject/raw/hihat_1")
         val pad3Sound: Uri = Uri.parse("android.resource://com.example.courseproject/raw/snare_1")
         val pad4Sound: Uri = Uri.parse("android.resource://com.example.courseproject/raw/openhat")
@@ -47,6 +52,18 @@ class RealTimeRhythm : AppCompatActivity() {
         ManeValues.players.add(MediaPlayer.create(this, pad7Sound))
         ManeValues.players.add(MediaPlayer.create(this, pad8Sound))
         ManeValues.players.add(MediaPlayer.create(this, pad9Sound))
+
+        val pad1 = ManeValues.soundPool.load(this, R.raw.kick_mixed, 0)
+        val pad2 = ManeValues.soundPool.load(this, R.raw.hihat_1, 0)
+        val pad3 = ManeValues.soundPool.load(this, R.raw.snare_1, 0)
+        val pad4 = ManeValues.soundPool.load(this, R.raw.openhat, 1)
+        val pad5 = ManeValues.soundPool.load(this, R.raw.scratch, 1)
+        val pad6 = ManeValues.soundPool.load(this, R.raw.clap, 0)
+        val pad7 = ManeValues.soundPool.load(this, R.raw.cowbell_long, 1)
+        val pad8 = ManeValues.soundPool.load(this, R.raw.cowbell_long, 1)
+        val pad9 = ManeValues.soundPool.load(this, R.raw.cowbell_long, 1)
+
+        ManeValues.soundPool.play(pad1, 1.0f, 1.0f, 1, 0, 1.0f)
 
         val btnMetronome: ToggleButton = findViewById(R.id.btnMetronome)
         btnMetronome.setOnCheckedChangeListener(myCheckedChangeListener)
@@ -81,39 +98,39 @@ class RealTimeRhythm : AppCompatActivity() {
                 MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN ->{
                     when (view?.id) {
                         R.id.btnPad1 -> {
-                            playDrum(ManeValues.players[0])
+                            playDrumCutItself(ManeValues.players[0])
                         }
 
                         R.id.btnPad2 -> {
-                            playDrum(ManeValues.players[1])
+                            playDrumCutItself(ManeValues.players[1])
                         }
 
                         R.id.btnPad3 -> {
-                            playDrum(ManeValues.players[2])
+                            playDrumCutItself(ManeValues.players[2])
                         }
 
                         R.id.btnPad4 -> {
-                            playDrum(ManeValues.players[3]) //issue
+                            playDrumCutItself(ManeValues.players[3]) //issue
                         }
 
                         R.id.btnPad5 -> {
-                            playDrum(ManeValues.players[4])
+                            playDrumCutItself(ManeValues.players[4])
                         }
 
                         R.id.btnPad6 -> {
-                            playDrum(ManeValues.players[5])
+                            playDrumCutItself(ManeValues.players[5])
                         }
 
                         R.id.btnPad7 -> {
-                            playDrum(ManeValues.players[6])
+                            playDrumCutItself(ManeValues.players[6])
                         }
 
                         R.id.btnPad8 -> {
-                            playDrum(ManeValues.players[7])
+                            playDrumCutItself(ManeValues.players[7])
                         }
 
                         R.id.btnPad9 -> {
-                            playDrum(ManeValues.players[8])
+                            playDrumCutItself(ManeValues.players[8])
                         }
                     }
                 }
@@ -133,7 +150,7 @@ class RealTimeRhythm : AppCompatActivity() {
         }
     }
 
-    private fun playDrum(mediaPlayer: MediaPlayer){ //hack
+    private fun playDrumCutItself(mediaPlayer: MediaPlayer){ //hack
         if(mediaPlayer.isPlaying){
             mediaPlayer.pause()
             mediaPlayer.seekTo(0)

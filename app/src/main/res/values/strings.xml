@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">R808</string>
+    <string name="app_name">808 Machine</string>
 
-    <string name="pad1_name">1 kick</string>
-    <string name="pad2_name">2 hihat</string>
-    <string name="pad3_name">3 snare</string>
-    <string name="pad4_name">4 openhat</string>
-    <string name="pad5_name">5 scratch</string>
-    <string name="pad6_name">6 clap</string>
-    <string name="pad7_name">7 cowbell</string>
-    <string name="pad8_name">8 cowbell</string>
-    <string name="pad9_name">9 cowbell</string>
+    <string name="pad1_name">kick</string>
+    <string name="pad2_name">hihat</string>
+    <string name="pad3_name">snare</string>
+    <string name="pad4_name">openhat</string>
+    <string name="pad5_name">scratch</string>
+    <string name="pad6_name">clap</string>
+    <string name="pad7_name">cowbell</string>
+    <string name="pad8_name">cowbell</string>
+    <string name="pad9_name">cowbell</string>
 </resources>
