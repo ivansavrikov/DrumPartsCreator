@@ -3,21 +3,17 @@ package com.example.courseproject
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import com.example.courseproject.core.ManeValues
 import kotlinx.coroutines.*
-import android.media.MediaPlayer
-import android.os.Build
-import android.view.WindowInsets
-import android.view.WindowInsetsController
 
 class RhythmicGridActivity : AppCompatActivity() {
     private lateinit var btnPlayCurrentPattern: ToggleButton
     private lateinit var btnPlayAllPatterns: ToggleButton
     private var buttonSteps: MutableList<ToggleButton> = mutableListOf()
     private var currentPatternIndex: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.decorView.systemUiVisibility = (
@@ -26,6 +22,7 @@ class RhythmicGridActivity : AppCompatActivity() {
                         or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
 
         setContentView(R.layout.activity_rhythmic_grid)
+
         val spinner: Spinner = findViewById(R.id.spinner)
         val pad1Name = resources.getString(R.string.pad1_name)
         val pad2Name = resources.getString(R.string.pad2_name)
@@ -94,7 +91,7 @@ class RhythmicGridActivity : AppCompatActivity() {
             ManeValues.patterns[currentPatternIndex][step] = isChecked
 
             if(view.isChecked && !btnPlayAllPatterns.isChecked && !btnPlayCurrentPattern.isChecked)
-                playPadCutItself(ManeValues.currentPlayer)
+                playPadCutItself(ManeValues.currentPad, currentPatternIndex)
             fillRhythmicStep(buttonSteps[step])
         }
 
@@ -126,12 +123,8 @@ class RhythmicGridActivity : AppCompatActivity() {
     private var endTime = System.currentTimeMillis() //testing
     private var totalTime = System.currentTimeMillis() //testing
 
-    private fun playPadCutItself(pad: MediaPlayer){ //hack
-        if(pad.isPlaying){
-            pad.pause()
-            pad.seekTo(0)
-        }
-        pad.start()
+    private fun playPadCutItself(pad: Int, pool: Int){
+        ManeValues.soundPools[pool].play(pad, 1.0f, 1.0f, 0, 0, 1.0f)
     }
 
     private fun playCurrentPattern() :Job {
@@ -141,7 +134,7 @@ class RhythmicGridActivity : AppCompatActivity() {
                 repeat(ManeValues.steps.size) {step ->
                     try {
                         buttonSteps[step].setBackgroundResource(R.drawable.step_button_played)
-                        if (ManeValues.steps[step]) playPadCutItself(ManeValues.currentPlayer)
+                        if (ManeValues.steps[step]) playPadCutItself(ManeValues.currentPad, currentPatternIndex)
                         delay(ManeValues.stepDuration)
                         fillRhythmicStep(buttonSteps[step])
                     } finally {
@@ -156,33 +149,14 @@ class RhythmicGridActivity : AppCompatActivity() {
         return CoroutineScope(Dispatchers.Default).launch(start = CoroutineStart.LAZY) {
             ensureActive()
             while (true){
-                repeat(ManeValues.steps.size) {step ->
+                repeat(ManeValues.steps.size){step ->
                     try {
-                        startTime = System.currentTimeMillis() //testing
-                        buttonSteps[step].setBackgroundResource(R.drawable.step_button_played)
-
-                        for(pattern in 0 until ManeValues.patterns.size){
-                            if(ManeValues.patterns[pattern][step]){
-                                if(ManeValues.players[pattern].isPlaying){
-                                    ManeValues.players[pattern].pause()
-                                    ManeValues.players[pattern].seekTo(0)
-                                }
-                                endTime = System.currentTimeMillis() //testing
-                                totalTime = endTime - startTime //testing
-                                Log.d("MyApp","test before start sound time = $totalTime") //testing
-                                ManeValues.players[pattern].start()
-                            }
+                        ManeValues.pads.forEachIndexed{ pattern, pad ->
+                            if(ManeValues.patterns[pattern][step])
+                                ManeValues.soundPools[pattern].play(pad, 1.0f, 1.0f, 0, 0, 1.0f)
                         }
-
-                        endTime = System.currentTimeMillis() //testing
-                        totalTime = endTime - startTime //testing
-                        Log.d("MyApp","test1 = $totalTime") //testing
-
-                        delay(ManeValues.stepDuration - totalTime) //200 iq move
-
-                        endTime = System.currentTimeMillis() //testing
-                        totalTime = endTime - startTime //testing
-                        Log.d("MyApp","test2 = $totalTime") //testing
+                        buttonSteps[step].setBackgroundResource(R.drawable.step_button_played)
+                        delay(ManeValues.stepDuration)
                         fillRhythmicStep(buttonSteps[step])
                     } finally {
                         fillRhythmicStep(buttonSteps[step])
@@ -203,7 +177,7 @@ class RhythmicGridActivity : AppCompatActivity() {
 
     private val choosePattern = object : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            ManeValues.currentPlayer = ManeValues.players[position]
+            ManeValues.currentPad = ManeValues.pads[position]
 
             fillRhythmicPattern(ManeValues.patterns[position])
 

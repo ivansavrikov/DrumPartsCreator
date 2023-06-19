@@ -24,14 +24,30 @@ object ManeValues{
         mutableListOf()
     )
 
-    private val audioAttributes = AudioAttributes.Builder()
-        .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+//    private val audioAttributes = AudioAttributes.Builder()
+//        .setUsage(AudioAttributes.USAGE_MEDIA)
+//        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+//        .build()
+//    internal val soundPool = SoundPool.Builder()
+//        .setMaxStreams(9)
+//        .setAudioAttributes(audioAttributes)
+//        .build()
+
+    internal val audioAttributes = AudioAttributes.Builder()
+        .setUsage(AudioAttributes.USAGE_MEDIA)
+        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
         .build()
+
     internal val soundPool = SoundPool.Builder()
-        .setMaxStreams(10)
+        .setMaxStreams(1)
         .setAudioAttributes(audioAttributes)
         .build()
+
+    internal var soundPools = mutableListOf<SoundPool>()
+
+    internal var pads = IntArray(9)
+    internal var currentPad: Int = 0
+    internal var padStreams: MutableList<Int> = mutableListOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
 
     internal lateinit var metronomePlayer: MediaPlayer
     internal lateinit var metronomeBeepDPlayer: MediaPlayer
@@ -45,7 +61,7 @@ object ManeValues{
     internal lateinit var pad7Player: MediaPlayer
     internal lateinit var pad8Player: MediaPlayer
     internal lateinit var pad9Player: MediaPlayer
-    internal lateinit var currentPlayer: MediaPlayer
+
 
     internal var players: MutableList<MediaPlayer> = mutableListOf()
 }
