@@ -10,4 +10,6 @@
     <color name="drum_radial">#3A3A3A</color>
     <color name="drum_pressed">#ee592e</color>
     <color name="drum_stroke">#FF8663</color>
+
+    <color name="step_on">#B5603D</color>
 </resources>

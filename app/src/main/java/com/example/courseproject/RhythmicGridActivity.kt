@@ -4,11 +4,17 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.View.OnClickListener
 import android.widget.*
 import com.example.courseproject.core.ManeValues
+import com.example.courseproject.core.Project808
+import com.example.courseproject.database.DBManager
 import kotlinx.coroutines.*
+import kotlinx.serialization.json.Json
 
 class RhythmicGridActivity : AppCompatActivity() {
+    private lateinit var btnSave: Button
+    private lateinit var btnOpen: Button
     private lateinit var btnPlayCurrentPattern: ToggleButton
     private lateinit var btnPlayAllPatterns: ToggleButton
     private var buttonSteps: MutableList<ToggleButton> = mutableListOf()
@@ -38,6 +44,12 @@ class RhythmicGridActivity : AppCompatActivity() {
         spinner.onItemSelectedListener = choosePattern
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
+
+        btnSave = findViewById(R.id.btnSave)
+        btnOpen = findViewById(R.id.btnOpen)
+
+        btnSave.setOnClickListener(onClick)
+        btnOpen.setOnClickListener(onClick)
 
         btnPlayCurrentPattern = findViewById(R.id.btnPlayCurrentPattern)
         btnPlayCurrentPattern.setOnCheckedChangeListener(performPlayback)
@@ -166,15 +178,6 @@ class RhythmicGridActivity : AppCompatActivity() {
         }
     }
 
-    private fun fillRhythmicStep(view: ToggleButton){
-        if (view.isChecked) {
-            view.setBackgroundResource(R.drawable.step_button_on)
-        } else {
-            if(view.id % 2 == 0) view.setBackgroundResource(R.drawable.step_button_off_v2)
-            else view.setBackgroundResource(R.drawable.step_button_off)
-        }
-    }
-
     private val choosePattern = object : AdapterView.OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             ManeValues.currentPad = ManeValues.pads[position]
@@ -191,6 +194,15 @@ class RhythmicGridActivity : AppCompatActivity() {
         }
     }
 
+    private fun fillRhythmicStep(view: ToggleButton){
+        if (view.isChecked) {
+            view.setBackgroundResource(R.drawable.step_button_on)
+        } else {
+            if(view.id % 2 == 0) view.setBackgroundResource(R.drawable.step_button_off_v2)
+            else view.setBackgroundResource(R.drawable.step_button_off)
+        }
+    }
+
     private fun fillRhythmicPattern(pattern: MutableList<Boolean>){
         buttonSteps.forEachIndexed { index, btnStep ->
             btnStep.setOnCheckedChangeListener(null) //hack
@@ -200,9 +212,50 @@ class RhythmicGridActivity : AppCompatActivity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         val intent = Intent(this, RealTimeRhythm::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
         startActivity(intent)
+    }
+
+    private fun saveProject(title: String){
+        val project = Project808(title, ManeValues.bpm, ManeValues.patterns)
+        val jsonString = Json.encodeToString(Project808.serializer(), project)
+
+        val dbManager = DBManager(this)
+        dbManager.open()
+        dbManager.insert(title, jsonString)
+        dbManager.close()
+    }
+
+    private fun openProject(id: Int){
+        val dbManager = DBManager(this)
+        dbManager.open()
+
+        val projectData = dbManager.getProject(id)
+        val project = Json.decodeFromString<Project808>(projectData)
+
+        ManeValues.bpm = project.bpm
+        ManeValues.patterns = project.patterns
+
+        dbManager.close()
+    }
+
+    private val onClick = OnClickListener { view ->
+        when(view.id){
+            R.id.btnSave -> {
+                saveProject("Temp")
+            }
+
+            R.id.btnOpen -> {
+                openProject(32)
+
+                fillRhythmicPattern(ManeValues.patterns[currentPatternIndex])
+
+                ManeValues.steps.clear()
+                ManeValues.steps.addAll(ManeValues.patterns[currentPatternIndex])
+            }
+        }
     }
 }

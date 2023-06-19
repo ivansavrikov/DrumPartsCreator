@@ -24,15 +24,6 @@ object ManeValues{
         mutableListOf()
     )
 
-//    private val audioAttributes = AudioAttributes.Builder()
-//        .setUsage(AudioAttributes.USAGE_MEDIA)
-//        .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-//        .build()
-//    internal val soundPool = SoundPool.Builder()
-//        .setMaxStreams(9)
-//        .setAudioAttributes(audioAttributes)
-//        .build()
-
     internal val audioAttributes = AudioAttributes.Builder()
         .setUsage(AudioAttributes.USAGE_MEDIA)
         .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)

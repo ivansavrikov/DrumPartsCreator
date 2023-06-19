@@ -7,6 +7,32 @@
     tools:context=".RhythmicGridActivity"
     android:background="@color/background">
 
+    <Button
+        android:id="@+id/btnSave"
+        style="@style/button"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="save"
+        app:backgroundTint="@color/gray"
+        app:layout_constraintBottom_toBottomOf="@+id/spinner"
+        app:layout_constraintEnd_toStartOf="@+id/spinner"
+        app:layout_constraintStart_toStartOf="@+id/gridLayout"
+        app:layout_constraintTop_toTopOf="@+id/spinner" />
+
+    <Button
+        android:id="@+id/btnOpen"
+        style="@style/button"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="open"
+        app:backgroundTint="@color/gray"
+        app:layout_constraintBottom_toBottomOf="@+id/spinner"
+        app:layout_constraintEnd_toEndOf="@+id/gridLayout"
+        app:layout_constraintStart_toEndOf="@+id/spinner"
+        app:layout_constraintTop_toTopOf="@+id/spinner" />
+
     <ToggleButton
         android:id="@+id/btnPlayCurrentPattern"
         style="@style/button"
