@@ -6,10 +6,10 @@
     <color name="gray">#454545</color>
     <color name="background">#1C1C1C</color>
 
-    <color name="drum_enabled">#ee592e</color>
+    <color name="drum_enabled">#FF7A52</color>
     <color name="drum_radial">#3A3A3A</color>
-    <color name="drum_pressed">#ee592e</color>
-    <color name="drum_stroke">#FF8663</color>
+    <color name="drum_pressed">#E76F4B</color>
+    <color name="drum_stroke">#FFA488</color>
 
     <color name="step_on">#B5603D</color>
 </resources>

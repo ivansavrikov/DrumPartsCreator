@@ -18,7 +18,6 @@ import java.util.*
 import kotlin.concurrent.timerTask
 
 class RealTimeRhythm : AppCompatActivity() {
-    private lateinit var editTextBpm: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.decorView.systemUiVisibility = (
@@ -27,9 +26,6 @@ class RealTimeRhythm : AppCompatActivity() {
                         or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
 
         setContentView(R.layout.activity_real_time_rhythm)
-
-        editTextBpm = findViewById(R.id.editTextBpm)
-        editTextBpm.addTextChangedListener(onChangeBpm)
 
         ManeValues.metronomeBeepDPlayer = MediaPlayer.create(this, R.raw.rim)
         ManeValues.metronomeBeepCPlayer = MediaPlayer.create(this, R.raw.rim)
@@ -52,9 +48,6 @@ class RealTimeRhythm : AppCompatActivity() {
         ManeValues.pads[7] = ManeValues.soundPools[7].load(this, R.raw.vox, 0)
         ManeValues.pads[8] = ManeValues.soundPools[8].load(this, R.raw.bass_808, 0)
 
-
-        val btnMetronome: ToggleButton = findViewById(R.id.btnMetronome)
-        btnMetronome.setOnCheckedChangeListener(myCheckedChangeListener)
 
         val btnPad1: Button = findViewById(R.id.btnPad1)
         val btnPad2: Button = findViewById(R.id.btnPad2)
@@ -128,7 +121,7 @@ class RealTimeRhythm : AppCompatActivity() {
         }
     }
 
-    private val menuManager = OnClickListener { view ->
+    internal val menuManager = OnClickListener { view ->
         when(view.id){
             R.id.btnEdit -> {
                 val intent = Intent(this, RhythmicGridActivity::class.java)
@@ -140,47 +133,5 @@ class RealTimeRhythm : AppCompatActivity() {
 
     private fun playDrumCutItself(pad: Int, pool: Int){
         ManeValues.soundPools[pool].play(pad, 1.0f, 1.0f, 0, 0, 1.0f)
-    }
-
-    private val myCheckedChangeListener =
-        OnCheckedChangeListener { _, isChecked ->
-            if (isChecked) metronomeStart()
-            else metronomeStop()
-        }
-
-    private val onChangeBpm = object : TextWatcher{
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            return
-        }
-
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            return
-        }
-
-        override fun afterTextChanged(editText: Editable) {
-            if(editTextBpm.text.toString() != ""){ //hack
-                ManeValues.bpm = editTextBpm.text.toString().toInt()
-                ManeValues.beatDuration = 60_000/ManeValues.bpm.toLong()
-                ManeValues.stepDuration = ManeValues.beatDuration/2
-            }
-        }
-    }
-
-    private var timer: Timer? = null
-    private var tickCount: Int = 0
-
-    private fun metronomeStart() {
-        timer = Timer()
-        timer?.scheduleAtFixedRate(timerTask {
-            if(tickCount % 4 == 0) ManeValues.metronomeBeepDPlayer.start()
-            else ManeValues.metronomeBeepCPlayer.start()
-            tickCount++
-        }, 0, ManeValues.beatDuration)
-    }
-
-    private fun metronomeStop() {
-        timer?.cancel()
-        timer = null
-        tickCount = 0
     }
 }

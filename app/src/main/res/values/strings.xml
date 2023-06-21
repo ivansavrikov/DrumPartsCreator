@@ -10,4 +10,9 @@
     <string name="pad7_name">cowbell</string>
     <string name="pad8_name">vox</string>
     <string name="pad9_name">808</string>
+
+    <string name="pad10_name">temp</string>
+    <string name="pad11_name">temp</string>
+    <string name="pad12_name">temp</string>
+
 </resources>

@@ -7,46 +7,16 @@
     android:background="@color/background"
     tools:context=".RealTimeRhythm">
 
-    <EditText
-        android:id="@+id/editTextBpm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="numberSigned"
-        android:gravity="center"
-        android:width="120dp"
-        android:text="120"
-        android:maxLength="3"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/btnMetronome"
-        app:layout_constraintEnd_toStartOf="@+id/btnMetronome"
-        app:layout_constraintTop_toTopOf="@+id/btnMetronome" />
-
-    <ToggleButton
-        android:id="@+id/btnMetronome"
-        style="@style/button"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="50dp"
-        android:checked="false"
-        android:gravity="center_horizontal"
-        android:paddingStart="0dp"
-        android:textOff=""
-        android:textOn=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/btnEdit"
         style="@style/button"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="1dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:gravity="center"
-        android:text="Edit"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/btnMetronome"
-        app:layout_constraintStart_toEndOf="@+id/btnMetronome" />
+        android:text="RG"
+        app:backgroundTint="@color/gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnPad1"
@@ -64,6 +34,7 @@
         style="@style/button"
         android:layout_width="120dp"
         android:layout_height="120dp"
+        app:layout_constraintVertical_bias="0.3"
         android:text="@string/pad2_name"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -153,5 +124,43 @@
         app:backgroundTint="@null"
         app:layout_constraintStart_toEndOf="@+id/btnPad5"
         app:layout_constraintTop_toBottomOf="@+id/btnPad6" />
+
+    <Button
+        android:id="@+id/btnPad10"
+        style="@style/button"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:text="@string/pad10_name"
+        app:backgroundTint="@null"
+        app:layout_constraintEnd_toEndOf="@+id/btnPad7"
+        app:layout_constraintStart_toStartOf="@+id/btnPad7"
+        app:layout_constraintTop_toBottomOf="@+id/btnPad7" />
+
+    <Button
+        android:id="@+id/btnPad11"
+        style="@style/button"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="1dp"
+        android:text="@string/pad11_name"
+        app:backgroundTint="@null"
+        app:layout_constraintEnd_toEndOf="@+id/btnPad8"
+        app:layout_constraintStart_toEndOf="@+id/btnPad7"
+        app:layout_constraintTop_toBottomOf="@+id/btnPad8" />
+
+    <Button
+        android:id="@+id/btnPad12"
+        style="@style/button"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:text="@string/pad12_name"
+        android:layout_marginTop="1dp"
+        android:layout_marginStart="1dp"
+        app:backgroundTint="@null"
+        app:layout_constraintStart_toEndOf="@+id/btnPad8"
+        app:layout_constraintTop_toBottomOf="@+id/btnPad9" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
