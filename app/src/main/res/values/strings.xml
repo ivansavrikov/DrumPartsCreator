@@ -11,8 +11,8 @@
     <string name="pad8_name">laser</string>
     <string name="pad9_name">808</string>
 
-    <string name="pad10_name">temp</string>
-    <string name="pad11_name">temp</string>
-    <string name="pad12_name">temp</string>
+    <string name="pad10_name">bass</string>
+    <string name="pad11_name">detroit</string>
+    <string name="pad12_name">scratch</string>
 
 </resources>

@@ -21,6 +21,9 @@ object ManeValues{
         mutableListOf(),
         mutableListOf(),
         mutableListOf(),
+        mutableListOf(),
+        mutableListOf(),
+        mutableListOf(),
         mutableListOf()
     )
 
@@ -36,7 +39,7 @@ object ManeValues{
 
     internal var soundPools = mutableListOf<SoundPool>()
 
-    internal var pads = IntArray(9)
+    internal var pads = IntArray(12)
     internal var currentPad: Int = 0
 
     internal lateinit var metronomePlayer: MediaPlayer

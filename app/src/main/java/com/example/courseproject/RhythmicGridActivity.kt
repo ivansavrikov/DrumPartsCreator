@@ -53,7 +53,11 @@ class RhythmicGridActivity : AppCompatActivity() {
         val pad7Name = resources.getString(R.string.pad7_name)
         val pad8Name = resources.getString(R.string.pad8_name)
         val pad9Name = resources.getString(R.string.pad9_name)
-        val items = listOf(pad1Name, pad2Name, pad3Name, pad4Name, pad5Name, pad6Name, pad7Name, pad8Name, pad9Name) //idea
+        val pad10Name = resources.getString(R.string.pad10_name)
+        val pad11Name = resources.getString(R.string.pad11_name)
+        val pad12Name = resources.getString(R.string.pad12_name)
+
+        val items = listOf(pad1Name, pad2Name, pad3Name, pad4Name, pad5Name, pad6Name, pad7Name, pad8Name, pad9Name, pad10Name, pad11Name, pad12Name) //idea
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, items)
         spinner.onItemSelectedListener = choosePattern
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -110,7 +114,7 @@ class RhythmicGridActivity : AppCompatActivity() {
                 index++
             }
         }
-        for(patternIndex in 0 until 9){
+        for(patternIndex in 0 until 12){
             ManeValues.patterns[patternIndex].addAll(ManeValues.steps)
         }
     }
@@ -289,6 +293,7 @@ class RhythmicGridActivity : AppCompatActivity() {
         val project = Json.decodeFromString<Project808>(projectData)
 
         ManeValues.bpm = project.bpm
+        editTextBpm.setText(project.bpm.toString())
         ManeValues.patterns = project.patterns
 
         dbManager.close()
@@ -301,7 +306,7 @@ class RhythmicGridActivity : AppCompatActivity() {
             }
 
             R.id.btnOpen -> {
-                openProject(32)
+                openProject(1)
 
                 fillRhythmicPattern(ManeValues.patterns[currentPatternIndex])
 

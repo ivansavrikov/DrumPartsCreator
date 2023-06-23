@@ -19,7 +19,7 @@ class RealTimeRhythm : AppCompatActivity() {
         ManeValues.metronomeBeepDPlayer = MediaPlayer.create(this, R.raw.rim)
         ManeValues.metronomeBeepCPlayer = MediaPlayer.create(this, R.raw.rim)
 
-        for(i in 0 until 9){
+        for(i in 0 until 12){
             val soundPool = SoundPool.Builder()
                 .setMaxStreams(1)
                 .setAudioAttributes(ManeValues.audioAttributes)
@@ -36,6 +36,9 @@ class RealTimeRhythm : AppCompatActivity() {
         ManeValues.pads[6] = ManeValues.soundPools[6].load(this, R.raw.cowbell, 0)
         ManeValues.pads[7] = ManeValues.soundPools[7].load(this, R.raw.lazer, 0)
         ManeValues.pads[8] = ManeValues.soundPools[8].load(this, R.raw.bass_808, 0)
+        ManeValues.pads[9] = ManeValues.soundPools[9].load(this, R.raw.bass, 0)
+        ManeValues.pads[10] = ManeValues.soundPools[10].load(this, R.raw.detroit, 0)
+        ManeValues.pads[11] = ManeValues.soundPools[11].load(this, R.raw.scratch_2, 0)
 
 
         val btnPad1: Button = findViewById(R.id.btnPad1)
@@ -47,6 +50,9 @@ class RealTimeRhythm : AppCompatActivity() {
         val btnPad7 :Button = findViewById(R.id.btnPad7)
         val btnPad8 :Button = findViewById(R.id.btnPad8)
         val btnPad9 :Button = findViewById(R.id.btnPad9)
+        val btnPad10 :Button = findViewById(R.id.btnPad10)
+        val btnPad11 :Button = findViewById(R.id.btnPad11)
+        val btnPad12 :Button = findViewById(R.id.btnPad12)
 
         val btnEdit: Button = findViewById(R.id.btnEdit)
         btnEdit.setOnClickListener(menuManager)
@@ -60,6 +66,9 @@ class RealTimeRhythm : AppCompatActivity() {
         btnPad7.setOnTouchListener(drumTouchListener)
         btnPad8.setOnTouchListener(drumTouchListener)
         btnPad9.setOnTouchListener(drumTouchListener)
+        btnPad10.setOnTouchListener(drumTouchListener)
+        btnPad11.setOnTouchListener(drumTouchListener)
+        btnPad12.setOnTouchListener(drumTouchListener)
     }
 
     private val drumTouchListener = object : View.OnTouchListener {
@@ -101,6 +110,18 @@ class RealTimeRhythm : AppCompatActivity() {
 
                         R.id.btnPad9 -> {
                             playDrumCutItself(ManeValues.pads[8], 8)
+                        }
+
+                        R.id.btnPad10 -> {
+                            playDrumCutItself(ManeValues.pads[9], 9)
+                        }
+
+                        R.id.btnPad11 -> {
+                            playDrumCutItself(ManeValues.pads[10], 10)
+                        }
+
+                        R.id.btnPad12 -> {
+                            playDrumCutItself(ManeValues.pads[11], 11)
                         }
                     }
                 }
