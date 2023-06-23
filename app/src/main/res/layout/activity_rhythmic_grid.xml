@@ -64,35 +64,49 @@
 
     <ToggleButton
         android:id="@+id/btnPlayCurrentPattern"
-        style="@style/button"
+        style="@style/toggle_button"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:background="#595959"
         android:checked="false"
         android:gravity="center"
         android:paddingStart="0dp"
-        android:textOff="Play"
-        android:textOn="Stop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/spinner"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
+        android:textOff="PATT"
+        android:textOn="PATT"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/btnPlay"
+        app:layout_constraintTop_toTopOf="@+id/btnPlay" />
 
     <ToggleButton
         android:id="@+id/btnPlayAllPatterns"
-        style="@style/button"
+        style="@style/toggle_button"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:background="#595959"
         android:checked="false"
         android:gravity="center"
         android:paddingStart="0dp"
-        android:textOff="Play song"
-        android:textOn="Stop song"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textOff="ALL"
+        android:textOn="ALL"
+        app:layout_constraintBottom_toBottomOf="@+id/btnPlay"
+        app:layout_constraintStart_toEndOf="@+id/btnPlay" />
+
+    <ToggleButton
+        android:id="@+id/btnPlay"
+        android:background="@drawable/play_toggle_button"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:checked="false"
+        android:gravity="center"
+        android:paddingStart="0dp"
+        android:textOff=""
+        android:textOn=""
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/spinner"
+        app:layout_constraintEnd_toEndOf="@+id/gridLayout"
+        app:layout_constraintStart_toStartOf="@+id/gridLayout"
         app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
+
 
     <Spinner
         android:id="@+id/spinner"
@@ -112,8 +126,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/black">
+        app:layout_constraintTop_toTopOf="parent">
 
     </GridLayout>
 

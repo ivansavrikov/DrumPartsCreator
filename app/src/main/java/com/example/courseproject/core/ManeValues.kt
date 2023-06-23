@@ -38,21 +38,8 @@ object ManeValues{
 
     internal var pads = IntArray(9)
     internal var currentPad: Int = 0
-    internal var padStreams: MutableList<Int> = mutableListOf(0, 0, 0, 0, 0, 0, 0, 0, 0)
 
     internal lateinit var metronomePlayer: MediaPlayer
     internal lateinit var metronomeBeepDPlayer: MediaPlayer
     internal lateinit var metronomeBeepCPlayer: MediaPlayer
-    internal lateinit var pad1Player: MediaPlayer
-    internal lateinit var pad2Player: MediaPlayer
-    internal lateinit var pad3Player: MediaPlayer
-    internal lateinit var pad4Player: MediaPlayer
-    internal lateinit var pad5Player: MediaPlayer
-    internal lateinit var pad6Player: MediaPlayer
-    internal lateinit var pad7Player: MediaPlayer
-    internal lateinit var pad8Player: MediaPlayer
-    internal lateinit var pad9Player: MediaPlayer
-
-
-    internal var players: MutableList<MediaPlayer> = mutableListOf()
 }

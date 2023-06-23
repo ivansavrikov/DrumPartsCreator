@@ -13,7 +13,7 @@ class DBManager(context: Context) {
     }
 
     fun insert(title: String, data: String){
-        var values = ContentValues().apply {
+        val values = ContentValues().apply {
             put(DBConstants.COLUMN_NAME_TITLE, title)
             put(DBConstants.COLUMN_NAME_DATA, data)
         }

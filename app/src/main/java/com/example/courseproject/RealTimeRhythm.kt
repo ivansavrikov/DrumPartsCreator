@@ -3,28 +3,17 @@ package com.example.courseproject
 import android.content.Intent
 import android.media.MediaPlayer
 import android.media.SoundPool
-import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.*
-import android.widget.CompoundButton.OnCheckedChangeListener
 import androidx.appcompat.app.AppCompatActivity
 import com.example.courseproject.core.ManeValues
-import java.util.*
-import kotlin.concurrent.timerTask
 
 class RealTimeRhythm : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.decorView.systemUiVisibility = (
-                View.SYSTEM_UI_FLAG_FULLSCREEN
-                        or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                        or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
-
         setContentView(R.layout.activity_real_time_rhythm)
 
         ManeValues.metronomeBeepDPlayer = MediaPlayer.create(this, R.raw.rim)
@@ -45,7 +34,7 @@ class RealTimeRhythm : AppCompatActivity() {
         ManeValues.pads[4] = ManeValues.soundPools[4].load(this, R.raw.rim, 0)
         ManeValues.pads[5] = ManeValues.soundPools[5].load(this, R.raw.clap, 0)
         ManeValues.pads[6] = ManeValues.soundPools[6].load(this, R.raw.cowbell, 0)
-        ManeValues.pads[7] = ManeValues.soundPools[7].load(this, R.raw.vox, 0)
+        ManeValues.pads[7] = ManeValues.soundPools[7].load(this, R.raw.lazer, 0)
         ManeValues.pads[8] = ManeValues.soundPools[8].load(this, R.raw.bass_808, 0)
 
 
