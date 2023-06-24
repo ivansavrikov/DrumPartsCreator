@@ -9,8 +9,9 @@
 
     <color name="drum_enabled">#FF7A52</color>
     <color name="drum_radial">#3A3A3A</color>
-    <color name="drum_pressed">#E76F4B</color>
-    <color name="drum_stroke">#FFA488</color>
+    <color name="drum_radial_pressed">#DF6B46</color>
+    <color name="drum_pressed">#FF835E</color>
+    <color name="drum_stroke">#FF9485</color>
 
     <color name="step_on">#B5603D</color>
 </resources>

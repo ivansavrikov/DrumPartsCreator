@@ -1,5 +1,8 @@
 package com.example.courseproject
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.content.Intent
 import android.media.MediaPlayer
 import android.media.SoundPool
@@ -71,6 +74,31 @@ class RealTimeRhythm : AppCompatActivity() {
         btnPad12.setOnTouchListener(drumTouchListener)
     }
 
+    private var isAnimating: Boolean = false
+    private fun pressPad(pad: Button){
+        val scaleDown = ObjectAnimator.ofPropertyValuesHolder(
+            pad,
+            PropertyValuesHolder.ofFloat("scaleX", 0.90f), // Уменьшение по оси X до 0.8
+            PropertyValuesHolder.ofFloat("scaleY", 0.90f) // Уменьшение по оси Y до 0.8
+        )
+        scaleDown.duration = 85 // Длительность анимации в миллисекундах
+        scaleDown.repeatCount = 1 // Количество повторений анимации
+        scaleDown.repeatMode = ObjectAnimator.REVERSE // Режим повторения анимации
+
+        scaleDown.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(animation: Animator) {}
+
+            override fun onAnimationEnd(animation: Animator) {
+                pad.scaleX = 1f
+                pad.scaleY = 1f
+            }
+
+            override fun onAnimationCancel(animation: Animator) {}
+            override fun onAnimationRepeat(animation: Animator) {}
+        })
+        scaleDown.start() // Запускаем анимацию уменьшения кнопки
+    }
+
     private val drumTouchListener = object : View.OnTouchListener {
         override fun onTouch(view: View?, event: MotionEvent?): Boolean {
             when(event?.actionMasked){
@@ -124,9 +152,9 @@ class RealTimeRhythm : AppCompatActivity() {
                             playDrumCutItself(ManeValues.pads[11], 11)
                         }
                     }
+                    pressPad(view as Button)
                 }
             }
-            view?.performClick()
             return false
         }
     }

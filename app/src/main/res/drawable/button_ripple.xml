@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="?android:colorControlHighlight">
+    android:color="#FF916F">
 
     <item android:id="@android:id/mask">
         <shape android:shape="rectangle">
             <solid android:color="@color/transparent"/>
         </shape>
     </item>
+
 
     <item android:id="@android:id/background">
         <shape android:shape="rectangle">
@@ -30,8 +31,8 @@
                 android:height="120dp" />
 
             <stroke
-                android:color="@color/transparent"
-                android:width="5dp"/>
+                android:color="@color/drum_stroke"
+                android:width="1dp"/>
         </shape>
     </item>
 </ripple>
