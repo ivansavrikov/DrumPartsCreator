@@ -11,30 +11,31 @@
         android:id="@+id/editTextBpm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="numberSigned"
-        android:gravity="center"
         android:width="120dp"
-        android:text="120"
+        android:gravity="center"
+        android:inputType="numberSigned"
         android:maxLength="3"
+        android:text="120"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/btnMetronome"
-        app:layout_constraintEnd_toStartOf="@+id/btnMetronome"
-        app:layout_constraintTop_toTopOf="@+id/btnMetronome" />
+        app:layout_constraintEnd_toStartOf="@+id/btnPlayAllPatterns"
+        app:layout_constraintStart_toEndOf="@+id/btnPlayCurrentPattern"
+        app:layout_constraintTop_toBottomOf="@+id/btnPlay"/>
 
     <ToggleButton
         android:id="@+id/btnMetronome"
-        style="@style/button"
+        style="@style/toggle_button"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginTop="50dp"
         android:checked="false"
-        android:gravity="center_horizontal"
+        android:gravity="center"
         android:paddingStart="0dp"
-        android:textOff=""
-        android:textOn=""
-        app:layout_constraintBottom_toTopOf="@+id/viewPager"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:textColor="@drawable/play_mode_color"
+        android:textOff="METRO"
+        android:textOn="METRO"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/btnPlay"
+        app:layout_constraintEnd_toStartOf="@+id/btnPlayAllPatterns"
+        app:layout_constraintStart_toEndOf="@+id/btnPlayCurrentPattern" />
 
     <Button
         android:id="@+id/btnSave"
@@ -112,9 +113,10 @@
         android:id="@+id/spinner"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:background="@color/gray"
+        android:background="@color/transparent"
         android:minHeight="40dp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/viewPager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -126,7 +128,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3">
 
     </GridLayout>
 

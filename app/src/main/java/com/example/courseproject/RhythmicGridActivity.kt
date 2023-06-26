@@ -21,6 +21,9 @@ import kotlin.concurrent.timerTask
 class RhythmicGridActivity : AppCompatActivity() {
     private lateinit var btnSave: Button
     private lateinit var btnOpen: Button
+    private lateinit var btnMetronome: ToggleButton
+    private var metronome: Int = 1
+
     private lateinit var btnPlayCurrentPattern: ToggleButton
     private lateinit var btnPlayAllPatterns: ToggleButton
     private lateinit var btnPlay: ToggleButton
@@ -28,7 +31,7 @@ class RhythmicGridActivity : AppCompatActivity() {
     private var currentPatternIndex: Int = 0
 
     private lateinit var editTextBpm: EditText
-    private lateinit var btnMetronome: ToggleButton
+
 
     private val mutex = Mutex()
 
@@ -41,7 +44,9 @@ class RhythmicGridActivity : AppCompatActivity() {
         editTextBpm.addTextChangedListener(onChangeBpm)
 
         btnMetronome = findViewById(R.id.btnMetronome)
-        btnMetronome.setOnCheckedChangeListener(myCheckedChangeListener)
+//        btnMetronome.setOnCheckedChangeListener(myCheckedChangeListener)
+
+        metronome = ManeValues.SoundPoolMetronome.load(this, R.raw.rim, 0)
 
         val spinner: Spinner = findViewById(R.id.spinner)
         val pad1Name = resources.getString(R.string.pad1_name)
@@ -192,6 +197,8 @@ class RhythmicGridActivity : AppCompatActivity() {
                 while (true){
                     repeat(ManeValues.steps.size) {step ->
                         startTime = System.currentTimeMillis()
+                        if(btnMetronome.isChecked && step % 2 == 0)
+                            ManeValues.SoundPoolMetronome.play(metronome, 1.0f, 1.0f, 0, 0, 1.0f)
                         try {
                             buttonSteps[step].setBackgroundResource(R.drawable.step_button_played)
                             if (ManeValues.steps[step]) playPadCutItself(ManeValues.currentPad, currentPatternIndex)
@@ -215,6 +222,8 @@ class RhythmicGridActivity : AppCompatActivity() {
                 while (true){
                     repeat(ManeValues.steps.size){step ->
                         startTime = System.currentTimeMillis()
+                        if(btnMetronome.isChecked && step % 2 == 0)
+                            ManeValues.SoundPoolMetronome.play(metronome, 1.0f, 1.0f, 0, 0, 1.0f)
                         try {
                             ManeValues.pads.forEachIndexed{ pattern, pad ->
                                 if(ManeValues.patterns[pattern][step])
@@ -316,12 +325,6 @@ class RhythmicGridActivity : AppCompatActivity() {
         }
     }
 
-    private val myCheckedChangeListener =
-        CompoundButton.OnCheckedChangeListener { _, isChecked ->
-            if (isChecked) metronomeStart()
-            else metronomeStop()
-        }
-
     private val onChangeBpm = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             return
@@ -340,37 +343,17 @@ class RhythmicGridActivity : AppCompatActivity() {
         }
     }
 
-    private var timer: Timer? = null
-    private var tickCount: Int = 0
-
-    private fun metronomeStart() {
-        timer = Timer()
-        timer?.scheduleAtFixedRate(timerTask {
-            if(tickCount % 4 == 0) ManeValues.metronomeBeepDPlayer.start()
-            else ManeValues.metronomeBeepCPlayer.start()
-            tickCount++
-        }, 0, ManeValues.beatDuration)
-    }
-
-    private fun metronomeStop() {
-        timer?.cancel()
-        timer = null
-        tickCount = 0
-    }
-
     override fun onPause() {
         super.onPause()
     }
     override fun onStop() {
         super.onStop()
-        metronomeStop()
         btnPlay.isChecked = false
         currentPlayback?.cancel()
         btnMetronome.isChecked = false
     }
     override fun onDestroy() {
         super.onDestroy()
-        metronomeStop()
         currentPlayback?.cancel()
 
         ManeValues.soundPools.forEach{soundPool ->

@@ -5,7 +5,23 @@
     <color name="white">#FFFFFFFF</color>
     <color name="dirty_white">#ECECECFF</color>
     <color name="gray">#454545</color>
-    <color name="background">#1C1C1C</color>
+
+    <color name="background">#000000</color>
+
+    <color name="pad_pink">#FF4366</color>
+    <color name="pad_pink_pressed">#FF6783</color>
+
+    <color name="pad_yellow">#FFE143</color>
+    <color name="pad_yellow_pressed">#FFE974</color>
+
+    <color name="pad_blue">#1BD6FF</color>
+    <color name="pad_blue_pressed">#5BE1FF</color>
+
+    <color name="pad_green">#45F27E</color>
+    <color name="pad_green_pressed">#7AFFA6</color>
+
+    <color name="pad_purple">#8D58FF</color>
+    <color name="pad_purple_pressed">#A074FF</color>
 
     <color name="drum_enabled">#FF7A52</color>
     <color name="drum_radial">#3A3A3A</color>

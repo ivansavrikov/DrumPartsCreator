@@ -37,6 +37,11 @@ object ManeValues{
         .setAudioAttributes(audioAttributes)
         .build()
 
+    internal val SoundPoolMetronome = SoundPool.Builder()
+        .setMaxStreams(1)
+        .setAudioAttributes(audioAttributes)
+        .build()
+
     internal var soundPools = mutableListOf<SoundPool>()
 
     internal var pads = IntArray(12)

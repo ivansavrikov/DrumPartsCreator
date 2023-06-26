@@ -1,18 +1,18 @@
 <resources>
     <string name="app_name">808 Machine</string>
 
-    <string name="pad1_name">kick</string>
-    <string name="pad2_name">hihat</string>
-    <string name="pad3_name">snare</string>
-    <string name="pad4_name">openhat</string>
-    <string name="pad5_name">rim</string>
-    <string name="pad6_name">clap</string>
-    <string name="pad7_name">cowbell</string>
-    <string name="pad8_name">laser</string>
-    <string name="pad9_name">808</string>
+    <string name="pad1_name">KICK</string>
+    <string name="pad2_name">HIHAT</string>
+    <string name="pad3_name">SNARE</string>
+    <string name="pad4_name">OPENHAT</string>
+    <string name="pad5_name">RIM</string>
+    <string name="pad6_name">CLAP</string>
+    <string name="pad7_name">COWBELL</string>
+    <string name="pad8_name">LASER</string>
+    <string name="pad9_name">808 BASS</string>
 
-    <string name="pad10_name">bass</string>
-    <string name="pad11_name">detroit</string>
-    <string name="pad12_name">scratch</string>
+    <string name="pad10_name">BASS</string>
+    <string name="pad11_name">BASS</string>
+    <string name="pad12_name">SCRATCH</string>
 
 </resources>
