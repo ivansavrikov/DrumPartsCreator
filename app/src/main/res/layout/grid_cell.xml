@@ -18,7 +18,6 @@
         android:textSize="10sp"
         android:checked="false"
         android:scaleType="fitXY"
-        android:gravity="fill"
-        android:background="@drawable/step_off"/>
+        android:gravity="fill" />
 
 </FrameLayout>

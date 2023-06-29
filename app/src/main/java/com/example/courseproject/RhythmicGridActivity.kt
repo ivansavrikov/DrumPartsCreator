@@ -3,21 +3,18 @@ package com.example.courseproject
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.*
-import androidx.viewpager2.widget.ViewPager2
 import com.example.courseproject.core.ManeValues
 import com.example.courseproject.core.Project808
 import com.example.courseproject.database.DBManager
+import com.shawnlin.numberpicker.NumberPicker
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.Json
 import java.util.*
-import kotlin.concurrent.timerTask
 
 class RhythmicGridActivity : AppCompatActivity() {
     private lateinit var btnClearPattern: Button
@@ -26,6 +23,9 @@ class RhythmicGridActivity : AppCompatActivity() {
     private lateinit var btnOpen: Button
 
     private lateinit var bpmPicker: com.shawnlin.numberpicker.NumberPicker
+    private lateinit var barsPicker: com.shawnlin.numberpicker.NumberPicker
+    private lateinit var stepInBeatPicker: com.shawnlin.numberpicker.NumberPicker
+
     private lateinit var btnMetronome: ToggleButton
     private var metronome: Int = 1
 
@@ -90,18 +90,27 @@ class RhythmicGridActivity : AppCompatActivity() {
 
         bpmPicker = findViewById<com.shawnlin.numberpicker.NumberPicker>(R.id.bpm_picker)
         bpmPicker.setOnValueChangedListener(onChangeBpm)
+
+        barsPicker = findViewById<com.shawnlin.numberpicker.NumberPicker>(R.id.bars_picker)
+        barsPicker.setOnValueChangedListener(onChangeRhythmicGrid)
+        stepInBeatPicker = findViewById<com.shawnlin.numberpicker.NumberPicker>(R.id.step_in_beat_picker)
+        stepInBeatPicker.setOnValueChangedListener(onChangeRhythmicGrid)
     }
 
-    private fun fillRhythmicGrid(bars: Int, stepsInBeat: Int){
+    override fun onResume() {
+        super.onResume()
+
         buttonSteps.clear()
+        ManeValues.steps.clear()
+        ManeValues.patterns.forEach { pattern ->
+            pattern.clear()
+        }
 
-        ManeValues.stepsInBeat = stepsInBeat
-        ManeValues.stepDuration = ManeValues.beatDuration / ManeValues.stepsInBeat
-
-        val rowCount = bars
-        val columnCount = stepsInBeat * 4
+        val rowCount = ManeValues.bars
+        val columnCount = ManeValues.stepsInBeat * 4
 
         val gridLayout = findViewById<GridLayout>(R.id.gridLayout)
+        gridLayout.removeAllViews()
         gridLayout.rowCount = rowCount
         gridLayout.columnCount = columnCount
 
@@ -116,10 +125,12 @@ class RhythmicGridActivity : AppCompatActivity() {
 
                 val btnStep = cell.findViewById<ToggleButton>(R.id.toggleButton)
 
-                fillRhythmicStep(btnStep)
 
                 btnStep.setOnCheckedChangeListener(setRhythmicStep)
                 btnStep.id = index
+
+                fillRhythmicStep(btnStep)
+
                 buttonSteps.add(index, btnStep)
 
                 val layoutParams = GridLayout.LayoutParams(columnSpec, rowSpec)
@@ -139,6 +150,32 @@ class RhythmicGridActivity : AppCompatActivity() {
         for(patternIndex in 0 until 12){
             ManeValues.patterns[patternIndex].addAll(ManeValues.steps)
         }
+    }
+
+    private val onChangeRhythmicGrid =
+        NumberPicker.OnValueChangeListener { picker, oldBars, newBars ->
+            when(picker.id){
+                R.id.bars_picker -> {
+                    if(newBars != oldBars){
+                        ManeValues.bars = newBars
+                        fillRhythmicGrid(ManeValues.bars, ManeValues.stepsInBeat)
+                    }
+                }
+
+                R.id.step_in_beat_picker -> {
+                    if(newBars != oldBars){
+                        ManeValues.stepsInBeat = newBars
+                        fillRhythmicGrid(ManeValues.bars, ManeValues.stepsInBeat)
+                    }
+                }
+            }
+        }
+
+    private fun fillRhythmicGrid(bars: Int, stepsInBeat: Int){
+        btnPlay.isChecked = false
+        ManeValues.stepsInBeat = stepsInBeat
+        ManeValues.stepDuration = ManeValues.beatDuration / ManeValues.stepsInBeat
+        onResume()
     }
 
     private val setRhythmicStep =
