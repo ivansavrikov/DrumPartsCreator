@@ -7,8 +7,10 @@ import android.media.SoundPool
 object ManeValues{
     internal var bpm: Int = 120 // beats per minute
     internal var beatDuration: Long = 500 //60_000/120
-    internal var step: Double = 0.5 //Rhythmic grid step = 1/2
-    internal var stepDuration :Long = 250 //step * beatDuration
+    internal var stepsInBeat: Int = 2 //Rhythmic grid step = 1/2
+    internal var stepDuration :Long = 250 //beatDuration / stepInBeat
+
+    internal var bars: Int = 4 // bars in rhythmic grid
 
     internal var steps: MutableList<Boolean> = mutableListOf()
 

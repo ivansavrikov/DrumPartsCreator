@@ -14,5 +14,7 @@
     <string name="pad10_name">BASS</string>
     <string name="pad11_name">BASS</string>
     <string name="pad12_name">SCRATCH</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>

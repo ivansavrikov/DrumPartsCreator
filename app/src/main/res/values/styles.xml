@@ -18,4 +18,8 @@
         <item name="android:textSize">6pt</item>
         <item name="android:background">@drawable/toggle_button</item>
     </style>
+    <style name="Widget.Theme.CourseProject.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
+    </style>
 </resources>

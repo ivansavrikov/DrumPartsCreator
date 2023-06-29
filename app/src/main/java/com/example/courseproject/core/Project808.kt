@@ -2,7 +2,7 @@ package com.example.courseproject.core
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Project808(val title: String, val bpm: Int, var patterns: Array<MutableList<Boolean>>) {
+data class Project808(val title: String, val bpm: Int, var bars: Int, var stepsInBeat: Int ,var patterns: Array<MutableList<Boolean>>) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
