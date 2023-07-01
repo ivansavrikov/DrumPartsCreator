@@ -99,13 +99,13 @@ class RealTimeRhythm : AppCompatActivity() {
         scaleDown.start() // Запускаем анимацию уменьшения кнопки
     }
 
-    private val drumTouchListener = object : View.OnTouchListener {
+    private val drumTouchListener = object : View.OnTouchListener { //функция для воспроизведения звука по нажатию
         override fun onTouch(view: View?, event: MotionEvent?): Boolean {
             when(event?.actionMasked){
-                MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN ->{
+                MotionEvent.ACTION_DOWN, MotionEvent.ACTION_POINTER_DOWN ->{ //мульти тач для каждой кнопки
                     when (view?.id) {
                         R.id.btnPad1 -> {
-                            playDrumCutItself(ManeValues.pads[0], 0)
+                            playDrumCutItself(ManeValues.pads[0], 0) //проигрываем соответсвующий звук
                         }
 
                         R.id.btnPad2 -> {
@@ -152,7 +152,7 @@ class RealTimeRhythm : AppCompatActivity() {
                             playDrumCutItself(ManeValues.pads[11], 11)
                         }
                     }
-                    pressPad(view as Button)
+                    pressPad(view as Button) //запускаем анимацию нажатия
                 }
             }
             return false

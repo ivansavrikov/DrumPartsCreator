@@ -244,12 +244,12 @@ class RhythmicGridActivity : AppCompatActivity() {
     private var totalTime = System.currentTimeMillis() //общее время воспроизведение ритмического шага
 
 
-    private fun playCurrentPattern() :Job {
-        return CoroutineScope(Dispatchers.Default).launch(start = CoroutineStart.LAZY) {
+    private fun playCurrentPattern() :Job { //функция для воспроизведения текущего паттерна
+        return CoroutineScope(Dispatchers.Default).launch(start = CoroutineStart.LAZY) {//запускаем коррутину
             mutex.withLock {
-                ensureActive()
+                ensureActive() // проверяем активна ли данная коррутина
                 while (true){
-                    repeat(ManeValues.steps.size) {step ->
+                    repeat(ManeValues.steps.size) {step -> //перебираем индексы массива кнопок
                         startTime = System.currentTimeMillis()
                         if(btnMetronome.isChecked && step % ManeValues.stepsInBeat == 0)
                             ManeValues.SoundPoolMetronome.play(metronome, 1.0f, 1.0f, 0, 0, 1.0f)
