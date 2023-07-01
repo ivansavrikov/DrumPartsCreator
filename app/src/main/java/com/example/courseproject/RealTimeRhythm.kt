@@ -3,6 +3,7 @@ package com.example.courseproject
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.media.MediaPlayer
 import android.media.SoundPool
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.courseproject.core.ManeValues
 
 class RealTimeRhythm : AppCompatActivity() {
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_real_time_rhythm)
@@ -74,12 +76,11 @@ class RealTimeRhythm : AppCompatActivity() {
         btnPad12.setOnTouchListener(drumTouchListener)
     }
 
-    private var isAnimating: Boolean = false
     private fun pressPad(pad: Button){
         val scaleDown = ObjectAnimator.ofPropertyValuesHolder(
             pad,
-            PropertyValuesHolder.ofFloat("scaleX", 0.90f), // Уменьшение по оси X до 0.8
-            PropertyValuesHolder.ofFloat("scaleY", 0.90f) // Уменьшение по оси Y до 0.8
+            PropertyValuesHolder.ofFloat("scaleX", 0.90f), // Уменьшение по оси X до 0.9
+            PropertyValuesHolder.ofFloat("scaleY", 0.90f) // Уменьшение по оси Y до 0.9
         )
         scaleDown.duration = 85 // Длительность анимации в миллисекундах
         scaleDown.repeatCount = 1 // Количество повторений анимации
@@ -162,7 +163,7 @@ class RealTimeRhythm : AppCompatActivity() {
     internal val menuManager = OnClickListener { view ->
         when(view.id){
             R.id.btnEdit -> {
-                val intent = Intent(this, RhythmicGridActivity::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
                 startActivity(intent)
             }
@@ -170,6 +171,7 @@ class RealTimeRhythm : AppCompatActivity() {
     }
 
     private fun playDrumCutItself(pad: Int, pool: Int){
+//        ManeValues.soundPools[pool].stop(pad)
         ManeValues.soundPools[pool].play(pad, 1.0f, 1.0f, 0, 0, 1.0f)
     }
 }

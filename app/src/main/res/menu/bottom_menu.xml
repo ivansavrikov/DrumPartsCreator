@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/drumPad"
+        android:orderInCategory="1"
+        android:title=""
+        android:icon="@drawable/icon_drumpad"/>
+
+    <item android:id="@+id/rhythmicGrid"
+        android:orderInCategory="2"
+        android:title=""
+        android:icon="@drawable/icon_sequencer"/>
+
+    <item android:id="@+id/projects"
+        android:orderInCategory="3"
+        android:title=""
+        android:icon="@drawable/icon_projects"/>
+</menu>

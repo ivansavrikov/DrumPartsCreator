@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/drumPad">
+    <fragment
+        android:id="@+id/projectManager"
+        android:name="com.example.courseproject.ProjectManager"
+        android:label="fragment_project_manager"
+        tools:layout="@layout/fragment_project_manager" />
+    <fragment
+        android:id="@+id/drumPad"
+        android:name="com.example.courseproject.DrumPad"
+        android:label="fragment_drum_pad"
+        tools:layout="@layout/fragment_drum_pad" >
+        <action
+            android:id="@+id/action_drumPad_to_sequencer"
+            app:destination="@id/sequencer" />
+        <action
+            android:id="@+id/action_drumPad_to_projectManager"
+            app:destination="@id/projectManager" />
+    </fragment>
+    <fragment
+        android:id="@+id/sequencer"
+        android:name="com.example.courseproject.Sequencer"
+        android:label="fragment_sequencer"
+        tools:layout="@layout/fragment_sequencer" />
+</navigation>
