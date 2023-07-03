@@ -36,9 +36,9 @@ class DBManager(context: Context) {
         val columns = null // Получение всех столбцов
         val selection = null // Без условия WHERE
         val selectionArgs = null // Без аргументов для условия WHERE
-        val sortOrder = null // Без сортировки
+        val sortOrder = "${DBConstants.COLUMN_NAME_ID} DESC" // Без сортировки
 
-        val cursor = db?.query(DBConstants.DATABASE_TABLE, columns, selection, selectionArgs, null, null, sortOrder)
+        val cursor = db?.query(DBConstants.DATABASE_TABLE, columns, selection, selectionArgs, null, null, DBConstants.COLUMN_NAME_ID + " DESC")
         val projects = HashMap<Int, String>()
 
         if (cursor != null) {

@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="@+id/spinner" />
 
     <Button
-        android:id="@+id/btnOpen"
+        android:id="@+id/btnNewProject"
         style="@style/button"
         android:layout_width="80dp"
         android:layout_height="50dp"

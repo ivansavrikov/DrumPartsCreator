@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".NewProject">
+
+    <GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5">
+
+    </GridLayout>
+
+    <com.shawnlin.numberpicker.NumberPicker
+        android:id="@+id/bars_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:background="@color/transparent"
+        app:layout_constraintBottom_toTopOf="@+id/gridLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/gridLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:np_dividerColor="@color/white"
+        app:np_dividerType="side_lines"
+        app:np_max="8"
+        app:np_min="1"
+        app:np_orientation="vertical"
+        app:np_selectedTextColor="@color/pad_pink"
+        app:np_selectedTextSize="20sp"
+        app:np_textColor="@color/white"
+        app:np_textSize="15sp"
+        app:np_value="4"
+        app:np_wheelItemCount="6" />
+
+    <com.shawnlin.numberpicker.NumberPicker
+        android:id="@+id/step_in_beat_picker"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_centerInParent="true"
+        android:background="@color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/gridLayout"
+        app:layout_constraintTop_toBottomOf="@+id/gridLayout"
+        app:np_dividerColor="@color/white"
+        app:np_dividerType="underline"
+        app:np_max="6"
+        app:np_min="1"
+        app:np_orientation="horizontal"
+        app:np_selectedTextColor="@color/pad_pink"
+        app:np_selectedTextSize="20sp"
+        app:np_textColor="@color/white"
+        app:np_textSize="15sp"
+        app:np_value="2"
+        app:np_wheelItemCount="6" />
+
+    <Button
+        android:id="@+id/btnCreate"
+        style="@style/button"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/pad_pink"
+        app:backgroundTint="@null"
+        android:text="CREATE"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/gridLayout"
+        app:layout_constraintStart_toStartOf="@+id/gridLayout"
+        app:layout_constraintTop_toBottomOf="@+id/step_in_beat_picker" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

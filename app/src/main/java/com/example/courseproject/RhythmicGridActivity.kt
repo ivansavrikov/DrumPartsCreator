@@ -66,7 +66,7 @@ class RhythmicGridActivity : AppCompatActivity() {
         spinner.adapter = adapter
 
         btnSave = findViewById(R.id.btnSave)
-        btnOpen = findViewById(R.id.btnOpen)
+        btnOpen = findViewById(R.id.btnNewProject)
 
         btnSave.setOnClickListener(onClick)
         btnOpen.setOnClickListener(onClick)
@@ -101,7 +101,7 @@ class RhythmicGridActivity : AppCompatActivity() {
         super.onResume()
 
         buttonSteps.clear()
-        ManeValues.steps.clear()
+        ManeValues.currentPattern.clear()
         ManeValues.patterns.forEach { pattern ->
             pattern.clear()
         }
@@ -120,7 +120,7 @@ class RhythmicGridActivity : AppCompatActivity() {
         var index: Int = 0
         for (row in 0 until rowCount) {
             for (col in 0 until columnCount) {
-                ManeValues.steps.add(index, false)
+                ManeValues.currentPattern.add(index, false)
                 val cell = layoutInflater.inflate(R.layout.grid_cell, null)
 
                 val btnStep = cell.findViewById<ToggleButton>(R.id.toggleButton)
@@ -148,7 +148,7 @@ class RhythmicGridActivity : AppCompatActivity() {
             }
         }
         for(patternIndex in 0 until 12){
-            ManeValues.patterns[patternIndex].addAll(ManeValues.steps)
+            ManeValues.patterns[patternIndex].addAll(ManeValues.currentPattern)
         }
     }
 
@@ -181,7 +181,7 @@ class RhythmicGridActivity : AppCompatActivity() {
     private val setRhythmicStep =
         CompoundButton.OnCheckedChangeListener { view, isChecked ->
             val step: Int = view.id
-            ManeValues.steps[step] = isChecked
+            ManeValues.currentPattern[step] = isChecked
             ManeValues.patterns[currentPatternIndex][step] = isChecked
 
             if(view.isChecked && !btnPlay.isChecked)
@@ -249,12 +249,12 @@ class RhythmicGridActivity : AppCompatActivity() {
             mutex.withLock {
                 ensureActive() // проверяем активна ли данная коррутина
                 while (true){
-                    repeat(ManeValues.steps.size) {step -> //перебираем индексы массива кнопок
+                    repeat(ManeValues.currentPattern.size) { step -> //перебираем индексы массива кнопок
                         startTime = System.currentTimeMillis()
                         if(btnMetronome.isChecked && step % ManeValues.stepsInBeat == 0)
                             ManeValues.SoundPoolMetronome.play(metronome, 1.0f, 1.0f, 0, 0, 1.0f)
                         try {
-                            if (ManeValues.steps[step]) playPadCutItself(ManeValues.currentPad, currentPatternIndex)
+                            if (ManeValues.currentPattern[step]) playPadCutItself(ManeValues.currentPad, currentPatternIndex)
                             withContext(Dispatchers.Main) {
                                 buttonSteps[step].setBackgroundResource(R.drawable.rhythmic_step_played)
                             }
@@ -278,7 +278,7 @@ class RhythmicGridActivity : AppCompatActivity() {
             mutex.withLock {
                 ensureActive()
                 while (true){
-                    repeat(ManeValues.steps.size){step ->
+                    repeat(ManeValues.currentPattern.size){ step ->
                         startTime = System.currentTimeMillis()
                         if(btnMetronome.isChecked && step % ManeValues.stepsInBeat == 0)
                             ManeValues.SoundPoolMetronome.play(metronome, 1.0f, 1.0f, 0, 0, 1.0f)
@@ -314,8 +314,8 @@ class RhythmicGridActivity : AppCompatActivity() {
 
             fillRhythmicPattern(ManeValues.patterns[position])
 
-            ManeValues.steps.clear()
-            ManeValues.steps.addAll(ManeValues.patterns[position])
+            ManeValues.currentPattern.clear()
+            ManeValues.currentPattern.addAll(ManeValues.patterns[position])
 
             currentPatternIndex = position
         }
@@ -370,8 +370,8 @@ class RhythmicGridActivity : AppCompatActivity() {
 
         ManeValues.patterns = project.patterns
 
-        ManeValues.steps.clear()
-        ManeValues.steps.addAll(ManeValues.patterns[currentPatternIndex])
+        ManeValues.currentPattern.clear()
+        ManeValues.currentPattern.addAll(ManeValues.patterns[currentPatternIndex])
         fillRhythmicPattern(ManeValues.patterns[currentPatternIndex])
 
         dbManager.close()
@@ -383,7 +383,7 @@ class RhythmicGridActivity : AppCompatActivity() {
                 saveProject("Temp")
             }
 
-            R.id.btnOpen -> {
+            R.id.btnNewProject -> {
                 openProject(1)
             }
         }
@@ -391,8 +391,8 @@ class RhythmicGridActivity : AppCompatActivity() {
 
     private val clearPattern = OnClickListener {
         ManeValues.patterns[currentPatternIndex].fill(false)
-        ManeValues.steps.clear()
-        ManeValues.steps.addAll(ManeValues.patterns[currentPatternIndex])
+        ManeValues.currentPattern.clear()
+        ManeValues.currentPattern.addAll(ManeValues.patterns[currentPatternIndex])
 
         fillRhythmicPattern(ManeValues.patterns[currentPatternIndex])
     }

@@ -21,9 +21,6 @@ class RealTimeRhythm : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_real_time_rhythm)
 
-        ManeValues.metronomeBeepDPlayer = MediaPlayer.create(this, R.raw.rim)
-        ManeValues.metronomeBeepCPlayer = MediaPlayer.create(this, R.raw.rim)
-
         for(i in 0 until 12){
             val soundPool = SoundPool.Builder()
                 .setMaxStreams(1)

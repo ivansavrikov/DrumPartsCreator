@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.navigation.fragment.findNavController
 import com.example.courseproject.core.ManeValues
 import com.example.courseproject.core.Project808
 import com.example.courseproject.database.DBManager
+import com.example.courseproject.databinding.FragmentSequencerBinding
 import com.shawnlin.numberpicker.NumberPicker
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
@@ -16,115 +18,55 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.Json
 
 class Sequencer : Fragment() {
-
+//    private val dataModel : DataViewModel by activityViewModels()
+    private lateinit var binding : FragmentSequencerBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
-        Toast.makeText(requireContext(), "create", Toast.LENGTH_SHORT).show()
-        return inflater.inflate(R.layout.fragment_sequencer, container, false)
+        savedInstanceState: Bundle?): View {
+        binding = FragmentSequencerBinding.inflate(inflater)
+        return binding.root
     }
 
-    companion object{
-        @JvmStatic
-        fun newInstance() = Sequencer()
-    }
-
+    lateinit var titlesPatterns : List<String>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        rhythmicButtons.clear()
 
-        btnMetronome = view.findViewById(R.id.btnMetronome)
-        metronome = ManeValues.SoundPoolMetronome.load(requireContext(), R.raw.rim, 0)
+//        binding.btnPlay.setOnClickListener {
+//            dataModel.isPlayed.value = binding.btnPlay.isChecked
+//        }
+//        binding.btnPlayCurrentPattern.setOnClickListener {
+//            dataModel.isPattern.value = binding.btnPlayCurrentPattern.isChecked
+//        }
+//        binding.btnPlayAllPatterns.setOnClickListener {
+//            dataModel.isSong.value = binding.btnPlayAllPatterns.isChecked
+//        }
+//        binding.btnMetronome.setOnClickListener {
+//            dataModel.isMetronome.value = binding.btnMetronome.isChecked
+//        }
+//
+//        dataModel.isPlayed.observe(activity as LifecycleOwner){
+//            binding.btnPlay.isChecked = it
+//        }
+//        dataModel.isPattern.observe(activity as LifecycleOwner){
+//            binding.btnPlayCurrentPattern.isChecked = it
+//        }
+//        dataModel.isSong.observe(activity as LifecycleOwner){
+//            binding.btnPlayAllPatterns.isChecked = it
+//        }
+//        dataModel.isMetronome.observe(activity as LifecycleOwner){
+//            binding.btnMetronome.isChecked = it
+//        }
+//        dataModel.bpm.observe(activity as LifecycleOwner){
+//            binding.bpmPicker.value = it
+//        }
 
-        val spinner: Spinner = view.findViewById(R.id.spinner)
-        val pad1Name = resources.getString(R.string.pad1_name)
-        val pad2Name = resources.getString(R.string.pad2_name)
-        val pad3Name = resources.getString(R.string.pad3_name)
-        val pad4Name = resources.getString(R.string.pad4_name)
-        val pad5Name = resources.getString(R.string.pad5_name)
-        val pad6Name = resources.getString(R.string.pad6_name)
-        val pad7Name = resources.getString(R.string.pad7_name)
-        val pad8Name = resources.getString(R.string.pad8_name)
-        val pad9Name = resources.getString(R.string.pad9_name)
-        val pad10Name = resources.getString(R.string.pad10_name)
-        val pad11Name = resources.getString(R.string.pad11_name)
-        val pad12Name = resources.getString(R.string.pad12_name)
-
-        val items = listOf(pad1Name, pad2Name, pad3Name, pad4Name, pad5Name, pad6Name, pad7Name, pad8Name, pad9Name, pad10Name, pad11Name, pad12Name) //idea
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, items)
-        spinner.onItemSelectedListener = choosePattern
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = adapter
-
-        btnSave = view.findViewById(R.id.btnSave)
-        btnOpen = view.findViewById(R.id.btnOpen)
-
-        btnSave.setOnClickListener(onClick)
-        btnOpen.setOnClickListener(onClick)
-
-        btnClearPattern = view.findViewById(R.id.btnClearPattern)
-        btnClearPattern.setOnClickListener(clearPattern)
-
-        btnPlay = view.findViewById(R.id.btnPlay)
-        btnPlay.setOnCheckedChangeListener(performPlayback)
-
-        btnPlayCurrentPattern = view.findViewById(R.id.btnPlayCurrentPattern)
-        btnPlayCurrentPattern.setOnCheckedChangeListener(performPlayback)
-
-        btnPlayAllPatterns = view.findViewById(R.id.btnPlayAllPatterns)
-        btnPlayAllPatterns.setOnCheckedChangeListener(performPlayback)
-        btnPlayAllPatterns.isChecked = true
-
-        ManeValues.bars = 4
-        ManeValues.stepsInBeat = 2
-        fillRhythmicGrid(ManeValues.bars, ManeValues.stepsInBeat)
-
-        bpmPicker = view.findViewById(R.id.bpm_picker)
-        bpmPicker.setOnValueChangedListener(onChangeBpm)
-
-        barsPicker = view.findViewById(R.id.bars_picker) as NumberPicker
-        barsPicker.setOnValueChangedListener(onChangeRhythmicGrid)
-        stepInBeatPicker = view.findViewById(R.id.step_in_beat_picker) as NumberPicker
-        stepInBeatPicker.setOnValueChangedListener(onChangeRhythmicGrid)
-
-    }
-
-    private lateinit var btnClearPattern: Button
-
-    private lateinit var btnSave: Button
-    private lateinit var btnOpen: Button
-
-    private lateinit var bpmPicker: com.shawnlin.numberpicker.NumberPicker
-    private lateinit var barsPicker: com.shawnlin.numberpicker.NumberPicker
-    private lateinit var stepInBeatPicker: com.shawnlin.numberpicker.NumberPicker
-
-    private lateinit var btnMetronome: ToggleButton
-    private var metronome: Int = 1
-
-    private lateinit var btnPlayCurrentPattern: ToggleButton
-    private lateinit var btnPlayAllPatterns: ToggleButton
-    private lateinit var btnPlay: ToggleButton
-    private var buttonSteps: MutableList<ToggleButton> = mutableListOf()
-    private var currentPatternIndex: Int = 0
-
-
-    private val mutex = Mutex()
-
-    override fun onResume() {
-        super.onResume()
-
-        buttonSteps.clear()
-        ManeValues.steps.clear()
-        ManeValues.patterns.forEach { pattern ->
-            pattern.clear()
-        }
 
         val rowCount = ManeValues.bars
         val columnCount = ManeValues.stepsInBeat * 4
 
-        val gridLayout = view?.findViewById<GridLayout>(R.id.gridLayout)
-        gridLayout?.removeAllViews()
-        gridLayout?.rowCount = rowCount
-        gridLayout?.columnCount = columnCount
+        binding.gridLayout.rowCount = rowCount
+        binding.gridLayout.columnCount = columnCount
 
         val columnSpec = GridLayout.spec(0, GridLayout.FILL, 1f)
         val rowSpec = GridLayout.spec(0, GridLayout.FILL, 1f)
@@ -132,18 +74,15 @@ class Sequencer : Fragment() {
         var index: Int = 0
         for (row in 0 until rowCount) {
             for (col in 0 until columnCount) {
-                ManeValues.steps.add(index, false)
-                val cell = layoutInflater.inflate(R.layout.grid_cell, null)
+                val rhythmicStep = layoutInflater.inflate(R.layout.grid_cell, null)
+                val rhythmicButton = rhythmicStep.findViewById<ToggleButton>(R.id.toggleButton)
 
-                val btnStep = cell.findViewById<ToggleButton>(R.id.toggleButton)
+                rhythmicButton.setOnCheckedChangeListener(setRhythmicStep)
+                rhythmicButton.id = index
 
+                fillRhythmicStep(rhythmicButton)
 
-                btnStep.setOnCheckedChangeListener(setRhythmicStep)
-                btnStep.id = index
-
-                fillRhythmicStep(btnStep)
-
-                buttonSteps.add(index, btnStep)
+                rhythmicButtons.add(index, rhythmicButton)
 
                 val layoutParams = GridLayout.LayoutParams(columnSpec, rowSpec)
                 layoutParams.width = 0
@@ -155,63 +94,82 @@ class Sequencer : Fragment() {
                 layoutParams.columnSpec = GridLayout.spec(col, 1f)
                 layoutParams.rowSpec = GridLayout.spec(row, 1f)
 
-                gridLayout?.addView(cell, layoutParams)
+                binding.gridLayout.addView(rhythmicStep, layoutParams)
                 index++
             }
         }
-        for(patternIndex in 0 until 12){
-            ManeValues.patterns[patternIndex].addAll(ManeValues.steps)
+
+        fillRhythmicPattern(ManeValues.patterns[currentPatternIndex])
+
+        metronome = ManeValues.SoundPoolMetronome.load(requireContext(), R.raw.rim, 0)
+
+        val spinner: Spinner = view.findViewById(R.id.spinner)
+
+        titlesPatterns = listOf(
+            resources.getString(R.string.pad1_name),
+            resources.getString(R.string.pad2_name),
+            resources.getString(R.string.pad3_name),
+            resources.getString(R.string.pad4_name),
+            resources.getString(R.string.pad5_name),
+            resources.getString(R.string.pad6_name),
+            resources.getString(R.string.pad7_name),
+            resources.getString(R.string.pad8_name),
+            resources.getString(R.string.pad9_name),
+            resources.getString(R.string.pad10_name),
+            resources.getString(R.string.pad11_name),
+            resources.getString(R.string.pad12_name)
+        )
+
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, titlesPatterns)
+        spinner.onItemSelectedListener = choosePattern
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+
+        binding.btnSave.setOnClickListener(onClick)
+
+        val navController = findNavController()
+        binding.btnNewProject.setOnClickListener {
+            navController.navigate(R.id.newProject)
         }
+
+        binding.btnClearPattern.setOnClickListener(clearPattern)
+        binding.btnPlay.setOnCheckedChangeListener(performPlayback)
+        binding.btnPlayCurrentPattern.setOnCheckedChangeListener(performPlayback)
+        binding.btnPlayAllPatterns.setOnCheckedChangeListener(performPlayback)
+        binding.btnPlayAllPatterns.isChecked = true
+        binding.bpmPicker.setOnValueChangedListener(onChangeBpm)
+        binding.bpmPicker.value = ManeValues.bpm
+        onChangeBpm.onValueChange(binding.bpmPicker, 0, ManeValues.bpm)
     }
 
-    private val onChangeRhythmicGrid =
-        NumberPicker.OnValueChangeListener { picker, oldBars, newBars ->
-            when(picker.id){
-                R.id.bars_picker -> {
-                    if(newBars != oldBars){
-                        ManeValues.bars = newBars
-                        fillRhythmicGrid(ManeValues.bars, ManeValues.stepsInBeat)
-                    }
-                }
+    private var metronome: Int = 1
+    private var rhythmicButtons: MutableList<ToggleButton> = mutableListOf()
 
-                R.id.step_in_beat_picker -> {
-                    if(newBars != oldBars){
-                        ManeValues.stepsInBeat = newBars
-                        fillRhythmicGrid(ManeValues.bars, ManeValues.stepsInBeat)
-                    }
-                }
-            }
-        }
-
-    private fun fillRhythmicGrid(bars: Int, stepsInBeat: Int){
-        btnPlay.isChecked = false
-        ManeValues.stepsInBeat = stepsInBeat
-        ManeValues.stepDuration = ManeValues.beatDuration / ManeValues.stepsInBeat
-        onResume()
-    }
+    private var currentPatternIndex: Int = 0
+    private val mutex = Mutex()
 
     private val setRhythmicStep =
         CompoundButton.OnCheckedChangeListener { view, isChecked ->
             val step: Int = view.id
-            ManeValues.steps[step] = isChecked
+            ManeValues.currentPattern[step] = isChecked
             ManeValues.patterns[currentPatternIndex][step] = isChecked
 
-            if(view.isChecked && !btnPlay.isChecked)
+            if(view.isChecked && !binding.btnPlay.isChecked)
                 playPadCutItself(ManeValues.currentPad, currentPatternIndex)
-            fillRhythmicStep(buttonSteps[step])
+            fillRhythmicStep(rhythmicButtons[step])
         }
 
     private var currentPlayback : Job? = null
 
     private fun playback(){
         currentPlayback?.cancel()
-        if (btnPlay.isChecked){
-            if(btnPlayCurrentPattern.isChecked && !btnPlayAllPatterns.isChecked)
+        if (binding.btnPlay.isChecked){
+            if(binding.btnPlayCurrentPattern.isChecked && !binding.btnPlayAllPatterns.isChecked)
                 currentPlayback = playCurrentPattern()
-            else if(btnPlayAllPatterns.isChecked && !btnPlayCurrentPattern.isChecked)
+            else if(binding.btnPlayAllPatterns.isChecked && !binding.btnPlayCurrentPattern.isChecked)
                 currentPlayback = playAllPatterns()
             currentPlayback?.start()
-        } else if(!btnPlay.isChecked){
+        } else if(!binding.btnPlay.isChecked){
             currentPlayback?.cancel()
         }
     }
@@ -219,7 +177,6 @@ class Sequencer : Fragment() {
     private val performPlayback =
         CompoundButton.OnCheckedChangeListener { view, isChecked ->
             when(view.id){
-
                 R.id.btnPlay -> {
                     if(isChecked){
                         playback()
@@ -227,28 +184,31 @@ class Sequencer : Fragment() {
                         currentPlayback?.cancel()
                     }
                 }
-
                 R.id.btnPlayCurrentPattern -> {
                     if (isChecked){
-                        btnPlayAllPatterns.isChecked = false
+                        binding.btnPlayAllPatterns.isChecked = false
                         playback()
                     } else{
-                        btnPlayAllPatterns.isChecked = true
+                        binding.btnPlayAllPatterns.isChecked = true
                     }
                 }
                 R.id.btnPlayAllPatterns -> {
                     if (isChecked){
-                        btnPlayCurrentPattern.isChecked = false
+                        binding.btnPlayCurrentPattern.isChecked = false
                         playback()
                     } else{
-                        btnPlayCurrentPattern.isChecked = true
+                        binding.btnPlayCurrentPattern.isChecked = true
                     }
                 }
             }
         }
 
+    private var volume: Float = 1.0f
+    private var rate: Float = 1.0f
+    private var priority: Int = 0
+    private var loop: Int = 0
     private fun playPadCutItself(pad: Int, pool: Int){
-        ManeValues.soundPools[pool].play(pad, 1.0f, 1.0f, 0, 0, 1.0f)
+        ManeValues.soundPools[pool].play(pad, volume, volume, priority, loop, rate)
     }
 
     private var startTime = System.currentTimeMillis() //начало воспроизведение ритмического шага
@@ -261,23 +221,23 @@ class Sequencer : Fragment() {
             mutex.withLock {
                 ensureActive() // проверяем активна ли данная коррутина
                 while (true){
-                    repeat(ManeValues.steps.size) { step -> //перебираем индексы массива кнопок
+                    repeat(ManeValues.currentPattern.size) { step -> //перебираем индексы массива кнопок
                         startTime = System.currentTimeMillis()
-                        if(btnMetronome.isChecked && step % ManeValues.stepsInBeat == 0)
-                            ManeValues.SoundPoolMetronome.play(metronome, 1.0f, 1.0f, 0, 0, 1.0f)
+                        if(binding.btnMetronome.isChecked && step % ManeValues.stepsInBeat == 0)
+                            ManeValues.SoundPoolMetronome.play(metronome, volume, volume, priority, loop, rate)
                         try {
-                            if (ManeValues.steps[step]) playPadCutItself(ManeValues.currentPad, currentPatternIndex)
+                            if (ManeValues.currentPattern[step]) playPadCutItself(ManeValues.currentPad, currentPatternIndex)
                             withContext(Dispatchers.Main) {
-                                buttonSteps[step].setBackgroundResource(R.drawable.rhythmic_step_played)
+                                rhythmicButtons[step].setBackgroundResource(R.drawable.rhythmic_step_played)
                             }
                             endTime = System.currentTimeMillis()
                             totalTime = endTime - startTime
                             delay(ManeValues.stepDuration - totalTime)
                             withContext(Dispatchers.Main) {
-                                fillRhythmicStep(buttonSteps[step])
+                                fillRhythmicStep(rhythmicButtons[step])
                             }
                         } finally {
-                            fillRhythmicStep(buttonSteps[step])
+                            fillRhythmicStep(rhythmicButtons[step])
                         }
                     }
                 }
@@ -285,14 +245,14 @@ class Sequencer : Fragment() {
         }
     }
 
-    private fun playAllPatterns() : Job {
+    private fun playAllPatterns() :Job {
         return CoroutineScope(Dispatchers.Default).launch(start = CoroutineStart.LAZY) {
             mutex.withLock {
                 ensureActive()
                 while (true){
-                    repeat(ManeValues.steps.size){ step ->
+                    repeat(ManeValues.currentPattern.size){ step ->
                         startTime = System.currentTimeMillis()
-                        if(btnMetronome.isChecked && step % ManeValues.stepsInBeat == 0)
+                        if(binding.btnMetronome.isChecked && step % ManeValues.stepsInBeat == 0)
                             ManeValues.SoundPoolMetronome.play(metronome, 1.0f, 1.0f, 0, 0, 1.0f)
                         try {
                             ManeValues.pads.forEachIndexed{ pattern, pad ->
@@ -301,7 +261,7 @@ class Sequencer : Fragment() {
                             }
 
                             withContext(Dispatchers.Main) {
-                                buttonSteps[step].setBackgroundResource(R.drawable.rhythmic_step_played)
+                                rhythmicButtons[step].setBackgroundResource(R.drawable.rhythmic_step_played)
                             }
 
                             endTime = System.currentTimeMillis()
@@ -309,10 +269,10 @@ class Sequencer : Fragment() {
                             delay(ManeValues.stepDuration - totalTime)
 
                             withContext(Dispatchers.Main) {
-                                fillRhythmicStep(buttonSteps[step])
+                                fillRhythmicStep(rhythmicButtons[step])
                             }
                         } finally {
-                            fillRhythmicStep(buttonSteps[step])
+                            fillRhythmicStep(rhythmicButtons[step])
                         }
                     }
                 }
@@ -326,10 +286,11 @@ class Sequencer : Fragment() {
 
             fillRhythmicPattern(ManeValues.patterns[position])
 
-            ManeValues.steps.clear()
-            ManeValues.steps.addAll(ManeValues.patterns[position])
+            ManeValues.currentPattern.clear()
+            ManeValues.currentPattern.addAll(ManeValues.patterns[position])
 
             currentPatternIndex = position
+            binding.btnPlayCurrentPattern.text = titlesPatterns[currentPatternIndex]
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -341,8 +302,8 @@ class Sequencer : Fragment() {
     }
 
     private fun fillRhythmicPattern(pattern: MutableList<Boolean>){
-        buttonSteps.forEachIndexed { index, btnStep ->
-            btnStep.setOnCheckedChangeListener(null) //hack
+        rhythmicButtons.forEachIndexed { index, btnStep ->
+            btnStep.setOnCheckedChangeListener(null)
             btnStep.isChecked = pattern[index]
             btnStep.setOnCheckedChangeListener(setRhythmicStep)
             fillRhythmicStep(btnStep)
@@ -359,45 +320,24 @@ class Sequencer : Fragment() {
         dbManager.close()
     }
 
-    private fun openProject(id: Int){
-        val dbManager = DBManager(requireContext())
-        dbManager.open()
-
-        val projectData = dbManager.getProject(id)
-        val project = Json.decodeFromString<Project808>(projectData)
-
-        ManeValues.bpm = project.bpm
-        bpmPicker.value = ManeValues.bpm
-        onChangeBpm.onValueChange(bpmPicker, 0, ManeValues.bpm)
-        ManeValues.stepsInBeat = project.stepsInBeat
-        ManeValues.bars = project.bars
-        fillRhythmicGrid(ManeValues.bars, ManeValues.stepsInBeat)
-
-        ManeValues.patterns = project.patterns
-
-        ManeValues.steps.clear()
-        ManeValues.steps.addAll(ManeValues.patterns[currentPatternIndex])
-        fillRhythmicPattern(ManeValues.patterns[currentPatternIndex])
-
-        dbManager.close()
-    }
-
     private val onClick = View.OnClickListener { view ->
         when (view.id) {
             R.id.btnSave -> {
-                saveProject("Temp")
+                val title = "Temp"
+                saveProject(title)
+                Toast.makeText(requireContext(), "Проект $title сохранен", Toast.LENGTH_SHORT).show()
             }
 
-            R.id.btnOpen -> {
-                openProject(1)
+            R.id.btnNewProject -> {
+
             }
         }
     }
 
     private val clearPattern = View.OnClickListener {
         ManeValues.patterns[currentPatternIndex].fill(false)
-        ManeValues.steps.clear()
-        ManeValues.steps.addAll(ManeValues.patterns[currentPatternIndex])
+        ManeValues.currentPattern.clear()
+        ManeValues.currentPattern.addAll(ManeValues.patterns[currentPatternIndex])
 
         fillRhythmicPattern(ManeValues.patterns[currentPatternIndex])
     }
@@ -406,5 +346,19 @@ class Sequencer : Fragment() {
         ManeValues.bpm = bpm
         ManeValues.beatDuration = 60_000/ ManeValues.bpm.toLong()
         ManeValues.stepDuration = ManeValues.beatDuration/ ManeValues.stepsInBeat
+    }
+
+    override fun onPause() {
+        super.onPause()
+        currentPlayback?.cancel()
+    }
+    override fun onStop() {
+        super.onStop()
+        currentPlayback?.cancel()
+        binding.btnPlay.isChecked = false
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        currentPlayback?.cancel()
     }
 }

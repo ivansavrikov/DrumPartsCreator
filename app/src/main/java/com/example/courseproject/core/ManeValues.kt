@@ -1,7 +1,6 @@
 package com.example.courseproject.core
 
 import android.media.AudioAttributes
-import android.media.MediaPlayer
 import android.media.SoundPool
 
 object ManeValues{
@@ -12,21 +11,21 @@ object ManeValues{
 
     internal var bars: Int = 4 // bars in rhythmic grid
 
-    internal var steps: MutableList<Boolean> = mutableListOf()
+    internal var currentPattern: MutableList<Boolean> = mutableListOf()
 
     internal var patterns: Array<MutableList<Boolean>> = arrayOf(
-        mutableListOf(),
-        mutableListOf(),
-        mutableListOf(),
-        mutableListOf(),
-        mutableListOf(),
-        mutableListOf(),
-        mutableListOf(),
-        mutableListOf(),
-        mutableListOf(),
-        mutableListOf(),
-        mutableListOf(),
-        mutableListOf()
+        MutableList(size = 32) {false},
+        MutableList(size = 32) {false},
+        MutableList(size = 32) {false},
+        MutableList(size = 32) {false},
+        MutableList(size = 32) {false},
+        MutableList(size = 32) {false},
+        MutableList(size = 32) {false},
+        MutableList(size = 32) {false},
+        MutableList(size = 32) {false},
+        MutableList(size = 32) {false},
+        MutableList(size = 32) {false},
+        MutableList(size = 32) {false},
     )
 
     internal val audioAttributes = AudioAttributes.Builder()
@@ -48,8 +47,4 @@ object ManeValues{
 
     internal var pads = IntArray(12)
     internal var currentPad: Int = 0
-
-    internal lateinit var metronomePlayer: MediaPlayer
-    internal lateinit var metronomeBeepDPlayer: MediaPlayer
-    internal lateinit var metronomeBeepCPlayer: MediaPlayer
 }

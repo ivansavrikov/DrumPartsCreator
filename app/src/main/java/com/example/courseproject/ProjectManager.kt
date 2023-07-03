@@ -5,13 +5,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.courseproject.core.CustomAdapterRecyclerView
+import com.example.courseproject.core.ManeValues
+import com.example.courseproject.core.Project808
 import com.example.courseproject.database.DBManager
+import com.example.courseproject.viewmodels.DataViewModel
+import kotlinx.serialization.json.Json
 
 
 class ProjectManager : Fragment(), CustomAdapterRecyclerView.ItemClickListener {
+    private val dataModel : DataViewModel by activityViewModels()
     private var adapter: CustomAdapterRecyclerView? = null
     internal var projects :MutableList<String> = mutableListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,9 +49,30 @@ class ProjectManager : Fragment(), CustomAdapterRecyclerView.ItemClickListener {
         adapter = CustomAdapterRecyclerView(requireContext(), projects)
         adapter!!.setClickListener(this)
         recyclerView.adapter = adapter
+
     }
 
     override fun onItemClick(view: View?, position: Int) {
+        openProject(position+1)
+        val navController = findNavController()
+        navController.navigate(R.id.sequencer)
+    }
 
+    private fun openProject(id: Int){
+        val dbManager = DBManager(requireContext())
+        dbManager.open()
+
+        val projectData = dbManager.getProject(id)
+        val project = Json.decodeFromString<Project808>(projectData)
+
+        ManeValues.bpm = project.bpm
+        dataModel.bpm.value = ManeValues.bpm
+        ManeValues.stepsInBeat = project.stepsInBeat
+        ManeValues.bars = project.bars
+
+        ManeValues.patterns = project.patterns
+        ManeValues.currentPattern.clear()
+
+        dbManager.close()
     }
 }

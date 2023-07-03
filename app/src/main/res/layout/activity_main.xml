@@ -24,6 +24,7 @@
         app:menu="@menu/bottom_menu"
         app:itemIconTint="@drawable/play_mode_color"
         app:itemTextColor="@color/white"
+        app:itemRippleColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"

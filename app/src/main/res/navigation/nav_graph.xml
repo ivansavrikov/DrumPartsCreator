@@ -25,5 +25,14 @@
         android:id="@+id/sequencer"
         android:name="com.example.courseproject.Sequencer"
         android:label="fragment_sequencer"
-        tools:layout="@layout/fragment_sequencer" />
+        tools:layout="@layout/fragment_sequencer" >
+        <action
+            android:id="@+id/action_sequencer_to_newProject"
+            app:destination="@id/newProject" />
+    </fragment>
+    <fragment
+        android:id="@+id/newProject"
+        android:name="com.example.courseproject.NewProject"
+        android:label="fragment_new_project"
+        tools:layout="@layout/fragment_new_project" />
 </navigation>
