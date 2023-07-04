@@ -70,4 +70,12 @@ class MainActivity : AppCompatActivity() {
         }
         true
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ManeValues.soundPools.forEach{soundPool ->
+            soundPool.release()
+        }
+        ManeValues.SoundPoolMetronome.release()
+    }
 }

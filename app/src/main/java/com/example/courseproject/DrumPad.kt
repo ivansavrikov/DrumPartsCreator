@@ -15,6 +15,9 @@ import androidx.fragment.app.activityViewModels
 import com.example.courseproject.core.ManeValues
 import com.example.courseproject.databinding.FragmentDrumPadBinding
 import com.example.courseproject.viewmodels.DataViewModel
+import kotlinx.coroutines.*
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 class DrumPad : Fragment() {
     private val dataModel : DataViewModel by activityViewModels()
@@ -44,6 +47,26 @@ class DrumPad : Fragment() {
         binding.btnPad10.setOnTouchListener(drumTouchListener)
         binding.btnPad11.setOnTouchListener(drumTouchListener)
         binding.btnPad12.setOnTouchListener(drumTouchListener)
+
+        binding.btnPlay.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked){
+                playback()
+            } else{
+                currentPlayback?.cancel()
+            }
+        }
+    }
+
+    private var currentPlayback : Job? = null
+
+    private fun playback(){
+        currentPlayback?.cancel()
+        if (binding.btnPlay.isChecked){
+            currentPlayback = playAllPatterns()
+            currentPlayback?.start()
+        } else if(!binding.btnPlay.isChecked){
+            currentPlayback?.cancel()
+        }
     }
 
     private fun pressPad(pad: Button){
@@ -130,7 +153,45 @@ class DrumPad : Fragment() {
     }
 
     private fun playDrumCutItself(pad: Int, pool: Int){
-        //mb
         ManeValues.soundPools[pool].play(pad, 1.0f, 1.0f, 0, 0, 1.0f)
+    }
+
+
+    private val mutex = Mutex()
+    private var startTime = System.currentTimeMillis() //начало воспроизведение ритмического шага
+    private var endTime = System.currentTimeMillis() //конец воспроизведение ритмического шага
+    private var totalTime = System.currentTimeMillis() //общее время воспроизведение ритмического шага
+    private fun playAllPatterns() : Job {
+        return CoroutineScope(Dispatchers.Default).launch(start = CoroutineStart.LAZY) {
+            mutex.withLock {
+                ensureActive()
+                while (true){
+                    repeat(ManeValues.currentPattern.size){ step ->
+                        startTime = System.currentTimeMillis()
+                        ManeValues.pads.forEachIndexed{ pattern, pad ->
+                            if(ManeValues.patterns[pattern][step])
+                                ManeValues.soundPools[pattern].play(pad, 1.0f, 1.0f, 0, 0, 1.0f)
+                        }
+                        endTime = System.currentTimeMillis()
+                        totalTime = endTime - startTime
+                        delay(ManeValues.stepDuration - totalTime)
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        currentPlayback?.cancel()
+    }
+    override fun onStop() {
+        super.onStop()
+        currentPlayback?.cancel()
+        binding.btnPlay.isChecked = false
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        currentPlayback?.cancel()
     }
 }

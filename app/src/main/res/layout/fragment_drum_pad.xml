@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DrumPad">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background">
+        android:background="@color/background"
+        tools:context=".DrumPad">
+
+        <ToggleButton
+            android:id="@+id/btnPlay"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/play_toggle_button"
+            android:checked="false"
+            android:gravity="center"
+            android:paddingStart="0dp"
+            android:textOff=""
+            android:textOn=""
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gridLayoutDrumPad" />
 
         <GridLayout
+            android:id="@+id/gridLayoutDrumPad"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:columnCount="3"
@@ -25,11 +41,11 @@
                 android:id="@+id/btnPad1"
                 style="@style/button"
                 android:layout_width="120dp"
-                android:layout_margin="3dp"
                 android:layout_height="120dp"
+                android:layout_margin="3dp"
                 android:background="@drawable/pad_pink_selector"
                 android:text="@string/pad1_name"
-                app:backgroundTint="@null"/>
+                app:backgroundTint="@null" />
 
             <Button
                 android:id="@+id/btnPad2"
@@ -39,7 +55,7 @@
                 android:layout_margin="3dp"
                 android:background="@drawable/pad_yellow_selector"
                 android:text="@string/pad2_name"
-                app:backgroundTint="@null"/>
+                app:backgroundTint="@null" />
 
             <Button
                 android:id="@+id/btnPad3"
@@ -57,8 +73,8 @@
                 android:id="@+id/btnPad4"
                 style="@style/button"
                 android:layout_width="120dp"
-                android:layout_margin="3dp"
                 android:layout_height="120dp"
+                android:layout_margin="3dp"
                 android:background="@drawable/pad_blue_selector"
                 android:text="@string/pad4_name"
                 app:backgroundTint="@null" />
@@ -71,7 +87,7 @@
                 android:layout_margin="3dp"
                 android:background="@drawable/pad_purple_selector"
                 android:text="@string/pad5_name"
-                app:backgroundTint="@null"/>
+                app:backgroundTint="@null" />
 
             <Button
                 android:id="@+id/btnPad6"
@@ -91,14 +107,14 @@
                 android:layout_margin="3dp"
                 android:background="@drawable/pad_pink_selector"
                 android:text="@string/pad7_name"
-                app:backgroundTint="@null"/>
+                app:backgroundTint="@null" />
 
             <Button
                 android:id="@+id/btnPad8"
                 style="@style/button"
                 android:layout_width="120dp"
-                android:layout_margin="3dp"
                 android:layout_height="120dp"
+                android:layout_margin="3dp"
                 android:background="@drawable/pad_green_selector"
                 android:text="@string/pad8_name"
                 app:backgroundTint="@null" />
@@ -107,11 +123,11 @@
                 android:id="@+id/btnPad9"
                 style="@style/button"
                 android:layout_width="120dp"
-                android:layout_margin="3dp"
                 android:layout_height="120dp"
+                android:layout_margin="3dp"
                 android:background="@drawable/pad_pink_selector"
                 android:text="@string/pad9_name"
-                app:backgroundTint="@null"/>
+                app:backgroundTint="@null" />
 
             <Button
                 android:id="@+id/btnPad10"

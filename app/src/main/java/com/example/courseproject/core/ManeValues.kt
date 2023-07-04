@@ -11,7 +11,7 @@ object ManeValues{
 
     internal var bars: Int = 4 // bars in rhythmic grid
 
-    internal var currentPattern: MutableList<Boolean> = mutableListOf()
+    internal var currentPattern: MutableList<Boolean> = MutableList(size = 32) {false}
 
     internal var patterns: Array<MutableList<Boolean>> = arrayOf(
         MutableList(size = 32) {false},

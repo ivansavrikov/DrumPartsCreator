@@ -1,16 +1,22 @@
 package com.example.courseproject
 
+import android.content.Context
+import android.opengl.Visibility
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.fragment.findNavController
 import com.example.courseproject.core.ManeValues
 import com.example.courseproject.core.Project808
 import com.example.courseproject.database.DBManager
 import com.example.courseproject.databinding.FragmentSequencerBinding
+import com.google.android.material.progressindicator.BaseProgressIndicator
 import com.shawnlin.numberpicker.NumberPicker
 import kotlinx.coroutines.*
 import kotlinx.coroutines.sync.Mutex
@@ -18,7 +24,6 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.Json
 
 class Sequencer : Fragment() {
-//    private val dataModel : DataViewModel by activityViewModels()
     private lateinit var binding : FragmentSequencerBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,36 +36,6 @@ class Sequencer : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rhythmicButtons.clear()
-
-//        binding.btnPlay.setOnClickListener {
-//            dataModel.isPlayed.value = binding.btnPlay.isChecked
-//        }
-//        binding.btnPlayCurrentPattern.setOnClickListener {
-//            dataModel.isPattern.value = binding.btnPlayCurrentPattern.isChecked
-//        }
-//        binding.btnPlayAllPatterns.setOnClickListener {
-//            dataModel.isSong.value = binding.btnPlayAllPatterns.isChecked
-//        }
-//        binding.btnMetronome.setOnClickListener {
-//            dataModel.isMetronome.value = binding.btnMetronome.isChecked
-//        }
-//
-//        dataModel.isPlayed.observe(activity as LifecycleOwner){
-//            binding.btnPlay.isChecked = it
-//        }
-//        dataModel.isPattern.observe(activity as LifecycleOwner){
-//            binding.btnPlayCurrentPattern.isChecked = it
-//        }
-//        dataModel.isSong.observe(activity as LifecycleOwner){
-//            binding.btnPlayAllPatterns.isChecked = it
-//        }
-//        dataModel.isMetronome.observe(activity as LifecycleOwner){
-//            binding.btnMetronome.isChecked = it
-//        }
-//        dataModel.bpm.observe(activity as LifecycleOwner){
-//            binding.bpmPicker.value = it
-//        }
-
 
         val rowCount = ManeValues.bars
         val columnCount = ManeValues.stepsInBeat * 4
@@ -120,9 +95,10 @@ class Sequencer : Fragment() {
             resources.getString(R.string.pad12_name)
         )
 
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, titlesPatterns)
         spinner.onItemSelectedListener = choosePattern
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        val adapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, titlesPatterns)
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
 
         binding.btnSave.setOnClickListener(onClick)
@@ -140,6 +116,8 @@ class Sequencer : Fragment() {
         binding.bpmPicker.setOnValueChangedListener(onChangeBpm)
         binding.bpmPicker.value = ManeValues.bpm
         onChangeBpm.onValueChange(binding.bpmPicker, 0, ManeValues.bpm)
+
+        binding.btnOkay.setOnClickListener(onClick)
     }
 
     private var metronome: Int = 1
@@ -291,6 +269,8 @@ class Sequencer : Fragment() {
 
             currentPatternIndex = position
             binding.btnPlayCurrentPattern.text = titlesPatterns[currentPatternIndex]
+            binding.btnPlayCurrentPattern.textOn = titlesPatterns[currentPatternIndex]
+            binding.btnPlayCurrentPattern.textOff = titlesPatterns[currentPatternIndex]
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -323,13 +303,19 @@ class Sequencer : Fragment() {
     private val onClick = View.OnClickListener { view ->
         when (view.id) {
             R.id.btnSave -> {
-                val title = "Temp"
+                binding.etProjectTitle.visibility = View.VISIBLE
+                binding.btnOkay.visibility = View.VISIBLE
+                binding.etProjectTitle.requestFocus()
+            }
+            R.id.btnOkay -> {
+                var title = binding.etProjectTitle.text.toString()
+                if(title == "") title = "untitled"
                 saveProject(title)
                 Toast.makeText(requireContext(), "Проект $title сохранен", Toast.LENGTH_SHORT).show()
-            }
-
-            R.id.btnNewProject -> {
-
+                binding.etProjectTitle.visibility = View.INVISIBLE
+                binding.btnOkay.visibility = View.INVISIBLE
+                val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(binding.etProjectTitle.windowToken, 0)
             }
         }
     }

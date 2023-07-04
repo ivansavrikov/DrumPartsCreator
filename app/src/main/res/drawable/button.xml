@@ -4,8 +4,8 @@
     <item
         android:state_pressed="true"
         android:state_enabled="true"
-        android:drawable="@drawable/button_ripple" />
+        android:drawable="@drawable/pad_pink_pressed" />
     <item
         android:state_enabled="true"
-        android:drawable="@drawable/button_enabled" />
+        android:drawable="@drawable/pad_pink_enabled" />
 </selector>

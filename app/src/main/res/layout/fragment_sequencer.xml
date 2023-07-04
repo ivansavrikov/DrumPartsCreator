@@ -10,55 +10,57 @@
     <Button
         android:id="@+id/btnClearPattern"
         style="@style/button"
-        android:layout_width="80dp"
+        android:layout_width="50dp"
         android:layout_height="50dp"
         android:gravity="center"
+        android:paddingStart="0dp"
         android:text="CLEAR"
         app:backgroundTint="@color/pad_pink"
+        app:layout_constraintBottom_toBottomOf="@+id/btnMetronome"
         app:layout_constraintEnd_toEndOf="@+id/gridLayout"
-        app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
+        app:layout_constraintStart_toStartOf="@+id/btnNewProject" />
 
     <ToggleButton
         android:id="@+id/btnMetronome"
         style="@style/toggle_button"
-        android:layout_width="80dp"
+        android:layout_width="50dp"
         android:layout_height="50dp"
         android:checked="false"
         android:gravity="center"
         android:paddingStart="0dp"
         android:textColor="@drawable/play_mode_color"
-        android:textOff="METRO"
-        android:textOn="METRO"
+        android:textOff="M"
+        android:textOn="M"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/bpm_picker"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gridLayout" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnSave"
         style="@style/button"
+        android:textColor="@color/white"
         android:layout_width="80dp"
         android:layout_height="50dp"
         android:gravity="center"
-        android:text="save"
-        app:backgroundTint="@color/gray"
-        app:layout_constraintBottom_toBottomOf="@+id/spinner"
-        app:layout_constraintEnd_toStartOf="@+id/spinner"
-        app:layout_constraintStart_toStartOf="@+id/gridLayout"
-        app:layout_constraintTop_toTopOf="@+id/spinner" />
+        android:paddingStart="0dp"
+        android:text="SAVE"
+        app:backgroundTint="@color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnNewProject"
         style="@style/button"
+        android:textColor="@color/white"
         android:layout_width="80dp"
         android:layout_height="50dp"
         android:gravity="center"
-        android:text="New"
-        app:backgroundTint="@color/gray"
-        app:layout_constraintBottom_toBottomOf="@+id/spinner"
-        app:layout_constraintEnd_toEndOf="@+id/gridLayout"
-        app:layout_constraintStart_toEndOf="@+id/spinner"
-        app:layout_constraintTop_toTopOf="@+id/spinner" />
+        android:paddingStart="0dp"
+        android:text="NEW"
+        app:backgroundTint="@color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ToggleButton
         android:id="@+id/btnPlayCurrentPattern"
@@ -103,20 +105,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/gridLayout"
         app:layout_constraintStart_toStartOf="@+id/gridLayout"
-        app:layout_constraintTop_toBottomOf="@+id/btnMetronome" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
 
     <Spinner
         android:id="@+id/spinner"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:background="@color/gray"
-        android:minHeight="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/black"
+        android:scaleType="fitXY"
+        android:minHeight="50dp"
+        android:padding="0dp"
+        android:layout_marginTop="1dp"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/bpm_picker"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/gridLayout"/>
 
     <GridLayout
         android:id="@+id/gridLayout"
@@ -151,5 +156,38 @@
         app:np_textSize="15sp"
         app:np_value="120"
         app:np_wheelItemCount="6" />
+
+    <EditText
+        android:id="@+id/etProjectTitle"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/white"
+        android:gravity="center"
+        android:inputType="text"
+        android:maxLength="20"
+        android:maxLines="1"
+        android:minEms="1"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textCursorDrawable="@color/white"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/btnOkay"
+        app:layout_constraintStart_toEndOf="@+id/btnSave"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnOkay"
+        style="@style/button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/gray"
+        android:gravity="center"
+        android:padding="0dp"
+        android:paddingStart="0dp"
+        android:text="OK"
+        android:visibility="invisible"
+        app:backgroundTint="@null"
+        app:layout_constraintEnd_toStartOf="@+id/btnNewProject"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
