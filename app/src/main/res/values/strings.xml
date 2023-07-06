@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">808 Machine</string>
 
     <string name="pad1_name">KICK</string>
@@ -7,17 +8,17 @@
     <string name="pad4_name">OPENHAT</string>
     <string name="pad5_name">RIM</string>
     <string name="pad6_name">CLAP</string>
-    <string name="pad7_name">COWBELL</string>
-    <string name="pad8_name">LASER</string>
-    <string name="pad9_name">808 BASS</string>
-
-    <string name="pad10_name">BASS</string>
-    <string name="pad11_name">BASS</string>
+    <string name="pad7_name">R KICK</string>
+    <string name="pad8_name">SNAP</string>
+    <string name="pad9_name">SPINZ</string>
+    <string name="pad10_name">ZAYTOVEN</string>
+    <string name="pad11_name">SUGE</string>
     <string name="pad12_name">SCRATCH</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="updates">Следите за обновлениями</string>
+    <string name="developer">По вопросам сотрудничества</string>
+    <string name="email">ivansavrikow@gmail.com</string>
 
+<!--    <string name="repository">Следите за обновлениями на <a href="https://github.com/AGHETTOCHRISTMASCAROL/808MachineVersions">GitHub </a></string>-->
+<!--    <string name="developer">По вопросам сотрудничества\n <a href="https://github.com/AGHETTOCHRISTMASCAROL/808MachineVersions">ivansavrikow@gmail.com</a></string>-->
 </resources>

@@ -6,12 +6,12 @@
     app:startDestination="@id/drumPad">
     <fragment
         android:id="@+id/projectManager"
-        android:name="com.example.courseproject.ProjectManager"
+        android:name="com.ionedeveloper.rhythmcomposer.ProjectManager"
         android:label="fragment_project_manager"
         tools:layout="@layout/fragment_project_manager" />
     <fragment
         android:id="@+id/drumPad"
-        android:name="com.example.courseproject.DrumPad"
+        android:name="com.ionedeveloper.rhythmcomposer.DrumPad"
         android:label="fragment_drum_pad"
         tools:layout="@layout/fragment_drum_pad" >
         <action
@@ -20,10 +20,13 @@
         <action
             android:id="@+id/action_drumPad_to_projectManager"
             app:destination="@id/projectManager" />
+        <action
+            android:id="@+id/action_drumPad_to_contacts2"
+            app:destination="@id/contacsFragment" />
     </fragment>
     <fragment
         android:id="@+id/sequencer"
-        android:name="com.example.courseproject.Sequencer"
+        android:name="com.ionedeveloper.rhythmcomposer.Sequencer"
         android:label="fragment_sequencer"
         tools:layout="@layout/fragment_sequencer" >
         <action
@@ -32,7 +35,11 @@
     </fragment>
     <fragment
         android:id="@+id/newProject"
-        android:name="com.example.courseproject.NewProject"
+        android:name="com.ionedeveloper.rhythmcomposer.NewProject"
         android:label="fragment_new_project"
         tools:layout="@layout/fragment_new_project" />
+    <fragment
+        android:id="@+id/contacsFragment"
+        android:name="com.ionedeveloper.rhythmcomposer.Contacts"
+        android:label="Contacts" />
 </navigation>

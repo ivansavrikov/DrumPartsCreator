@@ -14,4 +14,9 @@
         android:orderInCategory="3"
         android:title=""
         android:icon="@drawable/icon_projects"/>
+
+    <item android:id="@+id/contacts"
+        android:orderInCategory="4"
+        android:title=""
+        android:icon="@drawable/icon_contacts"/>
 </menu>

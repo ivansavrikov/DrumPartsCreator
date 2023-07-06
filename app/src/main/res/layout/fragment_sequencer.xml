@@ -142,6 +142,7 @@
         android:layout_height="50dp"
         android:layout_centerInParent="true"
         android:background="@color/transparent"
+        android:fontFamily="@font/montserrat_bold"
         app:layout_constraintBottom_toTopOf="@+id/gridLayout"
         app:layout_constraintEnd_toEndOf="@+id/gridLayout"
         app:layout_constraintStart_toStartOf="@+id/gridLayout"
@@ -155,7 +156,8 @@
         app:np_textColor="@color/white"
         app:np_textSize="15sp"
         app:np_value="120"
-        app:np_wheelItemCount="6" />
+        app:np_wheelItemCount="6"
+        />
 
     <EditText
         android:id="@+id/etProjectTitle"
@@ -167,6 +169,7 @@
         android:maxLength="20"
         android:maxLines="1"
         android:minEms="1"
+        android:fontFamily="@font/montserrat_regular"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
         android:textCursorDrawable="@color/white"
