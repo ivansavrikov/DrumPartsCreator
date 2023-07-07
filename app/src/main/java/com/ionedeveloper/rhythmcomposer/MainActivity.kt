@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         ManeValues.pads[3] = ManeValues.soundPools[3].load(this, R.raw.openhat, 0)
         ManeValues.pads[4] = ManeValues.soundPools[4].load(this, R.raw.rim, 0)
         ManeValues.pads[5] = ManeValues.soundPools[5].load(this, R.raw.clap, 0)
-        ManeValues.pads[6] = ManeValues.soundPools[6].load(this, R.raw.reverse_kick, 0)
+        ManeValues.pads[6] = ManeValues.soundPools[6].load(this, R.raw.cowbell, 0)
         ManeValues.pads[7] = ManeValues.soundPools[7].load(this, R.raw.snap, 0)
         ManeValues.pads[8] = ManeValues.soundPools[8].load(this, R.raw.bass_808, 0)
         ManeValues.pads[9] = ManeValues.soundPools[9].load(this, R.raw.bass_zaytoven, 0)

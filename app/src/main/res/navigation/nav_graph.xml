@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_drumPad_to_contacts2"
             app:destination="@id/contacsFragment" />
+        <action
+            android:id="@+id/action_drumPad_to_settings"
+            app:destination="@id/settings" />
     </fragment>
     <fragment
         android:id="@+id/sequencer"
@@ -42,4 +45,9 @@
         android:id="@+id/contacsFragment"
         android:name="com.ionedeveloper.rhythmcomposer.Contacts"
         android:label="Contacts" />
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.ionedeveloper.rhythmcomposer.Settings"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

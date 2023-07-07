@@ -5,6 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 open class DataViewModel : ViewModel() {
+    val vibrateSetting: MutableLiveData<Boolean> by lazy {
+        MutableLiveData<Boolean>().apply {
+            value = true
+        }
+    }
+
     val bpm: MutableLiveData<Int> by lazy { MutableLiveData<Int>() }
     val bars: MutableLiveData<Int> by lazy { MutableLiveData<Int>() }
     val stepsInBeat: MutableLiveData<Int> by lazy { MutableLiveData<Int>() }

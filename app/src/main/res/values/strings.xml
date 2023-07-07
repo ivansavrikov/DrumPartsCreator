@@ -8,7 +8,7 @@
     <string name="pad4_name">OPENHAT</string>
     <string name="pad5_name">RIM</string>
     <string name="pad6_name">CLAP</string>
-    <string name="pad7_name">R KICK</string>
+    <string name="pad7_name">COWBELL</string>
     <string name="pad8_name">SNAP</string>
     <string name="pad9_name">SPINZ</string>
     <string name="pad10_name">ZAYTOVEN</string>
@@ -18,7 +18,23 @@
     <string name="updates">Следите за обновлениями</string>
     <string name="developer">По вопросам сотрудничества</string>
     <string name="email">ivansavrikow@gmail.com</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
 
-<!--    <string name="repository">Следите за обновлениями на <a href="https://github.com/AGHETTOCHRISTMASCAROL/808MachineVersions">GitHub </a></string>-->
-<!--    <string name="developer">По вопросам сотрудничества\n <a href="https://github.com/AGHETTOCHRISTMASCAROL/808MachineVersions">ivansavrikow@gmail.com</a></string>-->
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--    <string name="repository">Следите за обновлениями на <a href="https://github.com/AGHETTOCHRISTMASCAROL/808MachineVersions">GitHub </a></string>-->
+    <!--    <string name="developer">По вопросам сотрудничества\n <a href="https://github.com/AGHETTOCHRISTMASCAROL/808MachineVersions">ivansavrikow@gmail.com</a></string>-->
 </resources>

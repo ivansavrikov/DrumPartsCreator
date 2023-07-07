@@ -29,6 +29,7 @@ class Sequencer : Fragment() {
     }
 
     lateinit var titlesPatterns : List<String>
+    private var metronome: Int = 0
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rhythmicButtons.clear()
@@ -116,7 +117,6 @@ class Sequencer : Fragment() {
         binding.btnOkay.setOnClickListener(onClick)
     }
 
-    private var metronome: Int = 1
     private var rhythmicButtons: MutableList<ToggleButton> = mutableListOf()
 
     private var currentPatternIndex: Int = 0

@@ -4,14 +4,20 @@ import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.annotation.SuppressLint
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.ionedeveloper.rhythmcomposer.core.ManeValues
 import com.ionedeveloper.rhythmcomposer.databinding.FragmentDrumPadBinding
 import com.ionedeveloper.rhythmcomposer.viewmodels.DataViewModel
@@ -54,6 +60,21 @@ class DrumPad : Fragment() {
             } else{
                 currentPlayback?.cancel()
             }
+        }
+
+        val navController = findNavController()
+        binding.ivSettings.setOnClickListener {
+            navController.navigate(R.id.settings)
+        }
+
+    }
+
+    fun Fragment.vibratePhone() {
+        val vibrator = context?.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        if (Build.VERSION.SDK_INT >= 26) {
+            vibrator.vibrate(VibrationEffect.createOneShot(80, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator.vibrate(80)
         }
     }
 
@@ -146,6 +167,7 @@ class DrumPad : Fragment() {
                         playDrumCutItself(ManeValues.pads[11], 11)
                     }
                 }
+                if(dataModel.vibrateSetting.value == true) vibratePhone()
                 pressPad(view as Button)
             }
         }
